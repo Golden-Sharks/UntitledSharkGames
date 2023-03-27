@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class QuizActivity extends AppCompatActivity {
     private boolean isRight;
-    private int currentTimeMS;
+    private QuizQuestion qq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +23,8 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         this.isRight = false;
-        this.currentTimeMS = 10000;
-        QuizQuestion qq = new QuizQuestion();
-        String[] questionStrings = qq.getInterface();
-        setProgressBar();
-        setTextView(questionStrings[0]);
-        setButtons(questionStrings, qq);
+        this.qq = new QuizQuestion(getApplicationContext(), "");//TODO add a theme
+        resetQuiz();
     }
 
     private void setProgressBar() {
@@ -64,9 +60,8 @@ public class QuizActivity extends AppCompatActivity {
     /**
      * Set the four buttons of the quiz interface
      * @param answers : the differents answers
-     * @param qq : the object QuizQuestion of this round
      */
-    private void setButtons(String[] answers, QuizQuestion qq) {
+    private void setButtons(String[] answers) {
         Button bt1 = findViewById(R.id.rep_1);
         bt1.setText(answers[1]);
         bt1.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +109,19 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             System.out.println("T une merde en fait?");
         }
-        startActivity(new Intent(QuizActivity.this, MainActivity.class));
+        boolean isEnd = qq.setUpNewQuestion();
+        if (!isEnd) {
+            startActivity(new Intent(QuizActivity.this, MainMenu.class));
+        }
+        else {
+            resetQuiz();
+        }
+    }
+
+    private void resetQuiz() {
+        String[] questionStrings = qq.getInterface();
+        setProgressBar();
+        setTextView(questionStrings[0]);
+        setButtons(questionStrings);
     }
 }

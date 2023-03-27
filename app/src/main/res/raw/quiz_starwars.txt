@@ -1,0 +1,5 @@
+Dans quel ordre sont sortis les films,456123789,456789123,123456789,789123456
+Sur quelle planète est né Anakin Skywalker,Tatoine,Naboo,Coruscant,Utapau
+Quelle planète est le centre décisionnaire de la république,Coruscant,Jakku,Naboo,Hot
+Quel est le jedi portant un sabre violet,Windu,Yoda,Kenobi,Plau Koon
+Quel est le jedi qui portait un sabre noir,Tare Vizsla,Din Djarin,Bo Katan,Yoda
