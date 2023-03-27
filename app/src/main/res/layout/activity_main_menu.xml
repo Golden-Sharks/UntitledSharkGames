@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainMenu"
-    android:background="@drawable/main_menu_background">
+    android:background="@drawable/main_menu_background"
+    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,9 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:fontFamily="@font/coneria_script"
+            android:fontFamily="@font/dancing_script_regular"
             android:text="@string/main_menu_title"
-            android:textSize="29dp"
+            android:textSize="40dp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:layout_marginTop="175dp"
@@ -33,33 +34,48 @@
             android:layout_below="@+id/title">
 
             <Button
+                android:id="@+id/multi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Multiplayer"
+                android:textAllCaps="false"
+                android:textSize="20dp"
                 android:layout_marginBottom="25dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/single"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Singleplayer"
+                android:textAllCaps="false"
+                android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
             <Button
+                android:id="@+id/training"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="entrainement"
+                android:text="Training"
                 android:textColor="@color/black"
+                android:textAllCaps="false"
+                android:textSize="20dp"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+            android:fontFamily="@font/dancing_script_regular"/>
             <Button
+                android:id="@+id/scores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="scores"
+                android:text="Scores"
+                android:textAllCaps="false"
+                android:textSize="20dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
         </LinearLayout>
 
     </RelativeLayout>
