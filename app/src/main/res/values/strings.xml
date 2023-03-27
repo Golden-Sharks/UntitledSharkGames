@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Untitled Shark Games</string>
+    <string name="presents">Presents</string>
+    <string name="developpedBy"><![CDATA[Developped by Golden Sharks ltd, development studio created in 2023 by Molinier Camille & Ruellou Louis ProgM, Hélène Feuillâtre, Johann Bourcier 2023]]></string>
+    <string name="main_menu_title">UNTITLED SHARK GAMES</string>
 </resources>
