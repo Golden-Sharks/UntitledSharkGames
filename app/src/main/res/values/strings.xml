@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Untitled Shark Games</string>
+    <string name="placeHolder">**********</string>
 </resources>
