@@ -47,7 +47,7 @@ public class MainMenu extends AppCompatActivity {
         singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainMenu.this, QuizActivity.class));
             }
         });
 
