@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainMenu"
+    android:background="@drawable/main_menu_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/coneria_script"
+            android:text="@string/main_menu_title"
+            android:textSize="29dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="175dp"
+            android:layout_marginBottom="50dp"/>
+
+        <LinearLayout
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_below="@+id/title">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Multiplayer"
+                android:layout_marginBottom="25dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Singleplayer"
+                android:textColor="@color/black"
+                android:layout_marginBottom="25dp"
+                android:backgroundTint="@color/white"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="entrainement"
+                android:textColor="@color/black"
+                android:layout_marginBottom="25dp"
+                android:backgroundTint="@color/white"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="scores"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
