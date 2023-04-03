@@ -71,7 +71,6 @@ public class MainMenu extends AppCompatActivity {
         scoresBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("clicked");
                 startActivity(new Intent(MainMenu.this, ScoreBoard.class));
             }
         });
@@ -97,8 +96,10 @@ public class MainMenu extends AppCompatActivity {
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        System.out.println(isOnBackground);
-        if(level== ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+        if(level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
+                level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND ||
+                level == ComponentCallbacks2.TRIM_MEMORY_MODERATE ||
+                level == ComponentCallbacks2.TRIM_MEMORY_COMPLETE) {
             isOnBackground = true;
             onPause();
         }
