@@ -1,4 +1,4 @@
-package esir.progm.untitledsharkgames;
+package esir.progm.untitledsharkgames.jeux.quiz;
 
 import android.content.Context;
 import android.os.Environment;
@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import esir.progm.untitledsharkgames.R;
 
 public class QuizQuestion {
 
@@ -34,10 +36,10 @@ public class QuizQuestion {
         this.idRightAnswer = rd.nextInt(4)+1;
         InputStream is;
         switch (theme) {
-            case "StarWars":
+            case "starwars":
                 is = context.getResources().openRawResource(R.raw.quiz_starwars);
                 break;
-            case "Pokémon":
+            case "pokemon":
                 is = context.getResources().openRawResource(R.raw.quiz_pokemon);
                 break;
             default:

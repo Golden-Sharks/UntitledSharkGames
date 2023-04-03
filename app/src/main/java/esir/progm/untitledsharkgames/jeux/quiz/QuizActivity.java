@@ -1,8 +1,7 @@
-package esir.progm.untitledsharkgames;
+package esir.progm.untitledsharkgames.jeux.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -11,9 +10,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import esir.progm.untitledsharkgames.R;
+
 public class QuizActivity extends AppCompatActivity {
     private boolean isRight;
     private QuizQuestion qq;
+
+    private CountDownTimer mCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,23 +25,31 @@ public class QuizActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_quiz);
 
+        String theme;
+        Bundle b = getIntent().getExtras();
+        if (b!=null) {
+            theme = b.getString("theme");
+        } else {
+            theme = "";
+        }
         this.isRight = false;
-        this.qq = new QuizQuestion(getApplicationContext(), "");//TODO add a theme
+        this.qq = new QuizQuestion(getApplicationContext(), theme);
         resetQuiz();
     }
 
+    /**
+     * Set the progress bar
+     */
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
         pb.setProgress(100);
         int nbMilliSec = 10000;
-        CountDownTimer mCountDownTimer = new CountDownTimer(nbMilliSec,100) {
-
+        this.mCountDownTimer = new CountDownTimer(nbMilliSec,100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current = pb.getProgress();
                 pb.setProgress(current - 1);
             }
-
             @Override
             public void onFinish() {
                 endRound();
@@ -121,6 +132,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void resetQuiz() {
         String[] questionStrings = qq.getInterface();
+        if (this.mCountDownTimer != null) this.mCountDownTimer.cancel();
         setProgressBar();
         setTextView(questionStrings[0]);
         setButtons(questionStrings);

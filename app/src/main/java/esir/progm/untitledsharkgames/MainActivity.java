@@ -11,6 +11,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import esir.progm.untitledsharkgames.menus.MainMenu;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

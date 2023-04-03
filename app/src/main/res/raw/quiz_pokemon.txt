@@ -1,7 +1,7 @@
 Quels sont les 3 types des starter dans la quatrième génération,feu/eau/plante,électrique/sol/spectre,fée/dragon/eau,insecte/poison/dragon
 Quels sont les 3 types des starter dans la sixième génération,combat/psy/ténèbre,insecte/fée/eau,sol/roche/ténèbre,électrique/normal/plante
 Combien d'arènes peut-on affronter dans Soul Silver/Heart Gold,16,8,10,14
-Au 27 mars 2023, combien de générations de pokémon sont sorties,9,7,8,10
+Au 27 mars 2023 combien de générations de pokémon sont sorties,9,7,8,10
 Quel est le dieu des pokemons,Arceus,Rayquaza,Giratina,Mew
 A partir de la Scarlet/Violet combien existe t'il d'especes de pokemons,1015,975,1537,897
 Quelle attaque voltali ne peux pas apprendre,Eclair croix,Ball-ombre,double pied,voeux
