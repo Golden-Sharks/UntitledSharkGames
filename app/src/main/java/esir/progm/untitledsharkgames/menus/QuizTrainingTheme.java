@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import esir.progm.untitledsharkgames.PopUp;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ManageFiles;
@@ -66,6 +68,11 @@ public class QuizTrainingTheme extends AppCompatActivity {
             String score = mf.readFile("score_tmp");
             System.out.println("SCORE : "+score);
             mf.erase("score_tmp");
+            Toast.makeText(getApplicationContext(), ("Votre score : "+score), Toast.LENGTH_LONG).show();
+            /*
+            PopUp popUp = new PopUp("score", score);
+            popUp.show(getSupportFragmentManager(), "SCORE");
+            */
         }
     }
 

@@ -10,16 +10,18 @@ import androidx.fragment.app.DialogFragment;
 public class PopUp extends DialogFragment {
 
     private String message;
+    private String title;
 
-    public PopUp(String message) {
+    public PopUp(String title, String message) {
         super();
         this.message = message;
+        this.title = title;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("ALERT");
+        builder.setTitle(this.title);
         builder.setMessage(this.message);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -29,4 +31,5 @@ public class PopUp extends DialogFragment {
         });
         return builder.create();
     }
+
 }
