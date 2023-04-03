@@ -10,13 +10,18 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import esir.progm.untitledsharkgames.PopUp;
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.interfaces.Game;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements Game {
     private boolean isRight;
     private QuizQuestion qq;
 
     private CountDownTimer mCountDownTimer;
+    private String theme;
+
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +30,25 @@ public class QuizActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_quiz);
 
-        String theme;
         Bundle b = getIntent().getExtras();
         if (b!=null) {
-            theme = b.getString("theme");
+            this.theme = b.getString("theme");
         } else {
-            theme = "";
+            this.theme = "";
         }
+
+        launch();
+    }
+
+    public void launch() {
         this.isRight = false;
-        this.qq = new QuizQuestion(getApplicationContext(), theme);
+        this.score = 0;
+        this.qq = new QuizQuestion(getApplicationContext(), this.theme);
         resetQuiz();
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     /**
@@ -63,6 +77,8 @@ public class QuizActivity extends AppCompatActivity {
      * @param question : this question to display
      */
     private void setTextView(String question) {
+        TextView score = findViewById(R.id.score);
+        score.setText("Score : "+this.score);
         TextView tv = findViewById(R.id.question);
         tv.setText(question);
     }
@@ -115,9 +131,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private void endRound() {
         if (isRight) {
-            System.out.println("GG");
             ProgressBar pb = findViewById(R.id.progressbar);
-            int points = pb.getProgress();
+            this.score += pb.getProgress();                                 //TODO calcul des scores
         } else {
             System.out.println("T une merde en fait?");
         }
@@ -126,6 +141,8 @@ public class QuizActivity extends AppCompatActivity {
             this.finish();
         }
         else {
+            TextView score = findViewById(R.id.score);
+            score.setText("Score : "+this.score);
             resetQuiz();
         }
     }

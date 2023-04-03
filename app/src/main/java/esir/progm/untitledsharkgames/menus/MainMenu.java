@@ -80,15 +80,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus){
-        super.onWindowFocusChanged(hasFocus);
-        if(hasFocus) {
-            View decor = getWindow().getDecorView();
-            decor.setSystemUiVisibility(hideSystemBars);
-        }
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         if(isOnBackground) {
@@ -109,6 +100,7 @@ public class MainMenu extends AppCompatActivity {
         System.out.println(isOnBackground);
         if(level== ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
             isOnBackground = true;
+            onPause();
         }
     }
 }
