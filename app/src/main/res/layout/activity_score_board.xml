@@ -33,13 +33,31 @@
             android:layout_marginTop="75dp"
             android:layout_marginBottom="50dp"/>
 
-        <ListView
-            android:id="@+id/list_scores"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/title"
-            android:layout_centerHorizontal="true"
-            android:listSelector="@android:color/transparent"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/title">
+
+            <ListView
+                android:id="@+id/list_names"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight=".75"
+                android:listSelector="@android:color/transparent"/>
+
+            <ListView
+                android:id="@+id/list_scores"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight=".25"
+                android:layout_gravity="right"
+                android:layoutDirection="rtl"
+                android:listSelector="@android:color/transparent"/>
+        </LinearLayout>
+
 
     </RelativeLayout>
 

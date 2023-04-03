@@ -1,0 +1,10 @@
+Requiiin,300
+Root,150
+Spraduss,149
+Michel,101
+Michel,99
+Tortue,85
+Empty,78
+Destin,60
+bato,57
+Mar1,1

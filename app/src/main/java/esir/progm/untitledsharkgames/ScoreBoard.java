@@ -3,6 +3,7 @@ package esir.progm.untitledsharkgames;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
@@ -14,7 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ScoreBoard extends AppCompatActivity {
@@ -43,23 +48,33 @@ public class ScoreBoard extends AppCompatActivity {
             }
         });
 
-        ArrayList<String> scores = loadScores();
+        HashMap<String, ArrayList<String>> map = loadScores(this.getApplicationContext());
+        ArrayList<String> users = map.get("users");
+        ArrayList<String> scores = map.get("scores");
 
-        ListView lv = findViewById(R.id.list_scores);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ListView lv_users = findViewById(R.id.list_names);
+        ListView lv_scores = findViewById(R.id.list_scores);
+        ArrayAdapter<String> arrayAdapter_users = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                users);
+
+        ArrayAdapter<String> arrayAdapter_scores = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
                 scores);
 
-        lv.setAdapter(arrayAdapter);
-        lv.setDivider(null);
-        arrayAdapter.notifyDataSetChanged();
+        lv_users.setAdapter(arrayAdapter_users);
+        lv_users.setDivider(null);
+        lv_scores.setAdapter(arrayAdapter_scores);
+        lv_scores.setDivider(null);
+        arrayAdapter_scores.notifyDataSetChanged();
 
         ImageButton exit = findViewById(R.id.exit);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ScoreBoard.this, MainMenu.class));
+                finish();
             }
         });
     }
@@ -73,19 +88,25 @@ public class ScoreBoard extends AppCompatActivity {
         }
     }
 
-    private ArrayList<String> loadScores(){
-        ArrayList<String> res = new ArrayList<>();
-        res.add("Requiiin...................300");
-        res.add("Root.......................150");
-        res.add("Spraduss...................149");
-        res.add("Michel.....................101");
-        res.add("Michel......................99");
-        res.add("Tortue......................85");
-        res.add("Empty.......................78");
-        res.add("Destin......................60");
-        res.add("bato........................57");
-        res.add("Mar1.........................1");
-
-        return res;
+    private HashMap<String, ArrayList<String>> loadScores(Context context){
+        ArrayList<String> users = new ArrayList<>();
+        ArrayList<String> scores = new ArrayList<>();
+        InputStream is = context.getResources().openRawResource(R.raw.scores);
+        BufferedReader r = new BufferedReader(new InputStreamReader(is));
+        String line;
+        try {
+            while ((line=r.readLine()) != null) {
+                System.out.println(line);
+                String[] splited = line.split(",");
+                users.add(splited[0]);
+                scores.add(splited[1]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        HashMap<String, ArrayList<String>> retMap = new HashMap<>();
+        retMap.put("users", users);
+        retMap.put("scores", scores);
+        return retMap;
     }
 }
