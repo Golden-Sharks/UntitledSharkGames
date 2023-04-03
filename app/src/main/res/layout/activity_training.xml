@@ -4,6 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Training">
+    android:background="@drawable/main_menu_background"
+    tools:context=".menus.Training">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/dancing_script_regular"
+            android:text="@string/training_title"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="175dp"
+            android:layout_marginBottom="50dp"/>
+
+        <ImageButton
+            android:id="@+id/exit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5pt"
+            android:src="@drawable/exit_image_white"
+            android:layout_alignParentRight="true"
+            android:background="@null"/>
+
+        <LinearLayout
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_below="@+id/title">
+
+            <Button
+                android:id="@+id/quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quiz"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="25dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
+            <Button
+                android:id="@+id/jeu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="insert game here"
+                android:textColor="@color/black"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:layout_marginBottom="25dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
+            <Button
+                android:id="@+id/jeu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="insert game here"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/dancing_script_regular"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

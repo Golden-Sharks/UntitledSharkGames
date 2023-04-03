@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScoreBoard"
+    tools:context=".menus.ScoreBoard"
     android:background="@drawable/score_background"
     app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
 

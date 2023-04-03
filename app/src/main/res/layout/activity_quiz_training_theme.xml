@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menus.MainMenu"
     android:background="@drawable/main_menu_background"
-    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
+    tools:context=".menus.QuizTrainingTheme">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,12 +17,21 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/dancing_script_regular"
-            android:text="@string/main_menu_title"
+            android:text="@string/chose_theme"
             android:textSize="40dp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:layout_marginTop="175dp"
             android:layout_marginBottom="50dp"/>
+
+        <ImageButton
+            android:id="@+id/exit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5pt"
+            android:src="@drawable/exit_image_white"
+            android:layout_alignParentRight="true"
+            android:background="@null"/>
 
         <LinearLayout
             android:layout_width="175dp"
@@ -34,21 +42,10 @@
             android:layout_below="@+id/title">
 
             <Button
-                android:id="@+id/multi"
+                android:id="@+id/starwars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Multiplayer"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:layout_marginBottom="25dp"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/dancing_script_regular"/>
-            <Button
-                android:id="@+id/single"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Singleplayer"
+                android:text="Star Wars"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"
@@ -56,21 +53,21 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
-                android:id="@+id/training"
+                android:id="@+id/pokemon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Training"
+                android:text="Pokemon"
                 android:textColor="@color/black"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
                 android:backgroundTint="@color/white"
-            android:fontFamily="@font/dancing_script_regular"/>
+                android:fontFamily="@font/dancing_script_regular"/>
             <Button
-                android:id="@+id/scores"
+                android:id="@+id/theme1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Scores"
+                android:text="insert theme here"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"

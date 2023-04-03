@@ -1,4 +1,4 @@
-package esir.progm.untitledsharkgames;
+package esir.progm.untitledsharkgames.menus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import esir.progm.untitledsharkgames.R;
 
 public class ScoreBoard extends AppCompatActivity {
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE

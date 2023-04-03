@@ -1,15 +1,15 @@
-package esir.progm.untitledsharkgames;
+package esir.progm.untitledsharkgames.menus;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import esir.progm.untitledsharkgames.R;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -47,7 +47,6 @@ public class MainMenu extends AppCompatActivity {
         singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, QuizActivity.class));
             }
         });
 
