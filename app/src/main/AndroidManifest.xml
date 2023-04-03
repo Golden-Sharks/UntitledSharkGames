@@ -12,6 +12,9 @@
         android:theme="@style/Theme.UntitledSharkGames"
         tools:targetApi="31">
         <activity
+            android:name=".SkarkSlap"
+            android:exported="false" />
+        <activity
             android:name=".menus.QuizTrainingTheme"
             android:exported="false" />
         <activity
