@@ -29,10 +29,9 @@ public class QuizActivity extends AppCompatActivity {
 
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
-        CountDownTimer mCountDownTimer;
         pb.setProgress(100);
         int nbMilliSec = 10000;
-        mCountDownTimer=new CountDownTimer(nbMilliSec,100) {
+        CountDownTimer mCountDownTimer = new CountDownTimer(nbMilliSec,100) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -106,12 +105,14 @@ public class QuizActivity extends AppCompatActivity {
     private void endRound() {
         if (isRight) {
             System.out.println("GG");
+            ProgressBar pb = findViewById(R.id.progressbar);
+            int points = pb.getProgress();
         } else {
             System.out.println("T une merde en fait?");
         }
         boolean isEnd = qq.setUpNewQuestion();
         if (!isEnd) {
-            startActivity(new Intent(QuizActivity.this, MainMenu.class));
+            this.finish();
         }
         else {
             resetQuiz();

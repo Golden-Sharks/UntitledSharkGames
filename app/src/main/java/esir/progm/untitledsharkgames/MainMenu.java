@@ -61,7 +61,7 @@ public class MainMenu extends AppCompatActivity {
         trainingMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainMenu.this, Training.class));
             }
         });
 
