@@ -2,6 +2,7 @@ package esir.progm.untitledsharkgames.jeux.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -10,9 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import esir.progm.untitledsharkgames.PopUp;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.interfaces.Game;
+import esir.progm.untitledsharkgames.ManageFiles;
 
 public class QuizActivity extends AppCompatActivity implements Game {
     private boolean isRight;
@@ -23,6 +24,8 @@ public class QuizActivity extends AppCompatActivity implements Game {
 
     private int score;
 
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +33,8 @@ public class QuizActivity extends AppCompatActivity implements Game {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_quiz);
 
-        Bundle b = getIntent().getExtras();
+        this.intent = getIntent();
+        Bundle b = this.intent.getExtras();
         if (b!=null) {
             this.theme = b.getString("theme");
         } else {
@@ -42,7 +46,6 @@ public class QuizActivity extends AppCompatActivity implements Game {
 
     public void launch() {
         this.isRight = false;
-        this.score = 0;
         this.qq = new QuizQuestion(getApplicationContext(), this.theme);
         resetQuiz();
     }
@@ -138,6 +141,8 @@ public class QuizActivity extends AppCompatActivity implements Game {
         }
         boolean isEnd = qq.setUpNewQuestion();
         if (!isEnd) {
+            new ManageFiles(getApplicationContext()).createFile("score_tmp", this.score+"");
+            System.out.println("true SCORE : "+this.score);
             this.finish();
         }
         else {
@@ -147,6 +152,7 @@ public class QuizActivity extends AppCompatActivity implements Game {
         }
     }
 
+
     private void resetQuiz() {
         String[] questionStrings = qq.getInterface();
         if (this.mCountDownTimer != null) this.mCountDownTimer.cancel();
@@ -154,4 +160,6 @@ public class QuizActivity extends AppCompatActivity implements Game {
         setTextView(questionStrings[0]);
         setButtons(questionStrings);
     }
+
+
 }

@@ -71,6 +71,7 @@ public class MainMenu extends AppCompatActivity {
         scoresBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("clicked");
                 startActivity(new Intent(MainMenu.this, ScoreBoard.class));
             }
         });
@@ -101,7 +102,7 @@ public class MainMenu extends AppCompatActivity {
                 level == ComponentCallbacks2.TRIM_MEMORY_MODERATE ||
                 level == ComponentCallbacks2.TRIM_MEMORY_COMPLETE) {
             isOnBackground = true;
-            onPause();
+            onPause(); // https://i.kym-cdn.com/photos/images/original/000/639/420/094.gif
         }
     }
 }
