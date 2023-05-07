@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".jeux.sharkSlap.SharkSlap">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/persoWhite"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true"/>
+
+        <RelativeLayout
+            android:id="@+id/row1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp">
+
+            <!-- SHARK ROW 1 -->
+            <ImageView
+                android:id="@+id/shark1_1"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+            <!--<ImageView
+                android:id="@+id/otter1_1"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/otter"/>-->
+
+            <ImageView
+                android:id="@+id/shark1_2"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark1_1"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+            <!--<ImageView
+                android:id="@+id/otter1_2"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_toRightOf="@id/otter1_1"
+                android:layout_marginLeft="12dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/otter"/>-->
+
+            <ImageView
+                android:id="@+id/shark1_3"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark1_2"
+                android:src="@drawable/shark" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:paddingBottom="250dp"
+            android:src="@drawable/wave1" />
+
+        <RelativeLayout
+            android:id="@+id/row2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row1">
+
+            <!-- SHARK ROW 1 -->
+            <ImageView
+                android:id="@+id/shark2_1"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+
+            <ImageView
+                android:id="@+id/shark2_2"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark2_1"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+
+            <ImageView
+                android:id="@+id/shark2_3"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark2_2"
+                android:src="@drawable/shark" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:paddingBottom="125dp"
+            android:src="@drawable/wave2" />
+
+        <RelativeLayout
+            android:id="@+id/row3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row2">
+
+            <!-- SHARK ROW 1 -->
+            <ImageView
+                android:id="@+id/shark3_1"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+
+            <ImageView
+                android:id="@+id/shark3_2"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark3_1"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shark" />
+
+            <ImageView
+                android:id="@+id/shark3_3"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/shark3_2"
+                android:src="@drawable/shark" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/wave1" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

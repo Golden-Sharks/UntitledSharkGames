@@ -53,10 +53,10 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
-                android:id="@+id/jeu1"
+                android:id="@+id/sharkslap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="insert game here"
+                android:text="Shark slap"
                 android:textColor="@color/black"
                 android:textAllCaps="false"
                 android:textSize="20dp"

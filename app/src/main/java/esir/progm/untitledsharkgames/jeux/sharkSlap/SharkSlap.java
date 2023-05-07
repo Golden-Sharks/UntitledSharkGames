@@ -1,38 +1,41 @@
-package esir.progm.untitledsharkgames.menus;
+package esir.progm.untitledsharkgames.jeux.sharkSlap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
-import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
-import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
-public class MainMenu extends AppCompatActivity {
-
+public class SharkSlap extends AppCompatActivity {
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
     private boolean isOnBackground = false;
+
+    private int score;
+    private TextView score_text;
+    private ArrayList<Place> places;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_main_menu);
-
-
+        setContentView(R.layout.activity_shark_slap);
         View decor = getWindow().getDecorView();
         decor.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
             @Override
@@ -42,41 +45,32 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+        MusicPlayer.getInstance().stop();
+        places = new ArrayList<Place>();
+        places.add(new Place("shark1_1", findViewById(R.id.shark1_1), this));
+        places.add(new Place("shark1_2", findViewById(R.id.shark1_2), this));
+        places.add(new Place("shark1_3", findViewById(R.id.shark1_3), this));
+        places.add(new Place("shark2_1", findViewById(R.id.shark2_1), this));
+        places.add(new Place("shark2_2", findViewById(R.id.shark2_2), this));
+        places.add(new Place("shark2_3", findViewById(R.id.shark2_3), this));
+        places.add(new Place("shark3_1", findViewById(R.id.shark3_1), this));
+        places.add(new Place("shark3_2", findViewById(R.id.shark3_2), this));
+        places.add(new Place("shark3_3", findViewById(R.id.shark3_3), this));
 
-        Button singlePlayer = findViewById(R.id.single);
-        Button multiplayer = findViewById(R.id.multi);
-        Button trainingMode = findViewById(R.id.training);
-        Button scoresBoard = findViewById(R.id.scores);
+        score = 0;
+        score_text = findViewById(R.id.score_text);
+        score_text.setText(score+"");
 
-        singlePlayer.setOnClickListener(new View.OnClickListener() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shark_slap_init);
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onClick(View view) {
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                new SharkSlapGame(SharkSlap.this, getApplicationContext(), places).execute();
             }
         });
 
-        multiplayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        trainingMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, Training.class));
-            }
-        });
-
-        scoresBoard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("clicked");
-                startActivity(new Intent(MainMenu.this, ScoreBoard.class));
-            }
-        });
-
-        MusicPlayer.getInstance().play(this.getApplicationContext(), R.raw.main_menu, true);
+        mediaPlayer.start();
     }
 
     @Override
@@ -90,13 +84,14 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
-        }
+        MusicPlayer.getInstance().resume();
+        isOnBackground = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MusicPlayer.getInstance().stop();
     }
 
     @Override
@@ -109,5 +104,18 @@ public class MainMenu extends AppCompatActivity {
             isOnBackground = true;
             onPause(); // https://i.kym-cdn.com/photos/images/original/000/639/420/094.gif
         }
+    }
+
+    public void addScore(int quantity, boolean substract) {
+        if(substract) {
+            if ((score - quantity) < 0) {
+                score = 0;
+            } else {
+                score -= quantity;
+            }
+        } else {
+            score += quantity;
+        }
+        score_text.setText(score+"");
     }
 }
