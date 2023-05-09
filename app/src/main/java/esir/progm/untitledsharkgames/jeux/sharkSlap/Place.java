@@ -49,7 +49,6 @@ public class Place {
                         }
                     }
                 });
-                System.out.println("end down");
             }
         });
 
@@ -82,7 +81,6 @@ public class Place {
 
     public void up() {
         if(isHidden) {
-            System.out.println("UP");
             isHidden = false;
             imageView.startAnimation(up_animation);
         }

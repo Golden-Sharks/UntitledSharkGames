@@ -143,6 +143,9 @@ public class QuizActivity extends AppCompatActivity implements Game {
         if (!isEnd) {
             new ManageFiles(getApplicationContext()).createFile("score_tmp", this.score+"");
             System.out.println("true SCORE : "+this.score);
+            Intent intent = new Intent();
+            intent.putExtra("score", score);
+            setResult(78, intent);
             this.finish();
         }
         else {

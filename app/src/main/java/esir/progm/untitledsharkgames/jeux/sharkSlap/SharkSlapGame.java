@@ -2,6 +2,7 @@ package esir.progm.untitledsharkgames.jeux.sharkSlap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -14,16 +15,14 @@ public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
 
     private final int DURATION_MILLISECONDS = 30000;
     private ArrayList<Place> places;
-    private Activity activity;
+    private SharkSlap activity;
     private final Random random = new Random();
-    private int score;
     private long timeBeforeNext = 0;
 
-    public SharkSlapGame(Activity activity, Context context, ArrayList<Place> places) {
+    public SharkSlapGame(SharkSlap activity, Context context, ArrayList<Place> places) {
         this.activity = activity;
         this.places = places;
         MusicPlayer.getInstance().play(context, R.raw.shark_slap, true);
-        score = 0;
     }
 
     @Override
@@ -46,6 +45,10 @@ public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
     @Override
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
+        Intent intent = new Intent();
+        intent.putExtra("score", activity.getScore());
+        activity.setResult(78, intent);
+        MusicPlayer.getInstance().stop();
         activity.finish();
     }
 }

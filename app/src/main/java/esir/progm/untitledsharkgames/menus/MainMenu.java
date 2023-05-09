@@ -12,7 +12,6 @@ import android.widget.Button;
 
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
-import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -51,6 +50,7 @@ public class MainMenu extends AppCompatActivity {
         singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(MainMenu.this, SinglePlayerMenu.class));
             }
         });
 

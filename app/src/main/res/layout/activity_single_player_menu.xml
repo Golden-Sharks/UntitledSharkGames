@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menus.SinglePlayerMenu"
+    android:background="@color/persoGreen">
+
+    <RelativeLayout
+        android:id="@+id/items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Single player"
+            android:textSize="50dp"
+            android:gravity="center"
+            android:textColor="@color/persoWhite"
+            android:fontFamily="@font/dancing_script_regular"
+            android:layout_marginBottom="40dp"/>
+
+        <LinearLayout
+            android:id="@+id/options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/title">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/persoWhite"
+                android:textSize="30dp"
+                android:fontFamily="@font/dancing_script_regular"
+                android:text="Nombre de jeux :"
+                android:layout_marginBottom="15dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/down_games"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="25dp"
+                    android:textColor="@color/persoWhite"/>
+
+                <TextView
+                    android:id="@+id/nb_games"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="25dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:textColor="@color/persoWhite"/>
+
+                <TextView
+                    android:id="@+id/up_games"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textSize="25dp"
+                    android:textColor="@color/persoWhite"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/start_singlePlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/persoWhite"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/persoDarkBlue"
+                android:textSize="25dp"
+                android:text="start"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/options"
+            android:src="@drawable/otter"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/score_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/phrase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="50dp"
+            android:textColor="@color/persoWhite"
+            android:fontFamily="@font/dancing_script_regular"
+            android:text="Votre score est de "/>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/phrase"
+            android:textSize="50dp"
+            android:textColor="@color/persoWhite"
+            android:fontFamily="@font/dancing_script_regular"
+            android:text="pts"/>
+
+        <LinearLayout
+            android:id="@+id/score_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/score"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_below="@+id/phrase"
+                    android:textSize="35dp"
+                    android:textColor="@color/persoWhite"
+                    android:fontFamily="@font/dancing_script_regular"
+                    android:text="your name : "/>
+
+                <EditText
+                    android:id="@+id/username_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:textSize="20dp"
+                    android:textColor="@color/persoWhite"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/persoDarkBlue"
+                android:text="save"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_below="@+id/score_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shark"/>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

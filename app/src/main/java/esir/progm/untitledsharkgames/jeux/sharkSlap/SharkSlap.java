@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.interfaces.Game;
 
-public class SharkSlap extends AppCompatActivity {
+public class SharkSlap extends AppCompatActivity implements Game {
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -45,6 +46,12 @@ public class SharkSlap extends AppCompatActivity {
                 }
             }
         });
+
+        launch();
+    }
+
+    @Override
+    public void launch() {
         MusicPlayer.getInstance().stop();
         places = new ArrayList<Place>();
         places.add(new Place("shark1_1", findViewById(R.id.shark1_1), this));
@@ -74,6 +81,24 @@ public class SharkSlap extends AppCompatActivity {
     }
 
     @Override
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int quantity, boolean substract) {
+        if(substract) {
+            if ((score - quantity) < 0) {
+                score = 0;
+            } else {
+                score -= quantity;
+            }
+        } else {
+            score += quantity;
+        }
+        score_text.setText(score+"");
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if(isOnBackground) {
@@ -91,7 +116,7 @@ public class SharkSlap extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        MusicPlayer.getInstance().stop();
+//        MusicPlayer.getInstance().stop();
     }
 
     @Override
@@ -104,18 +129,5 @@ public class SharkSlap extends AppCompatActivity {
             isOnBackground = true;
             onPause(); // https://i.kym-cdn.com/photos/images/original/000/639/420/094.gif
         }
-    }
-
-    public void addScore(int quantity, boolean substract) {
-        if(substract) {
-            if ((score - quantity) < 0) {
-                score = 0;
-            } else {
-                score -= quantity;
-            }
-        } else {
-            score += quantity;
-        }
-        score_text.setText(score+"");
     }
 }
