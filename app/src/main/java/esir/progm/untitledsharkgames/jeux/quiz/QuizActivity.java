@@ -15,7 +15,7 @@ import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.interfaces.Game;
 import esir.progm.untitledsharkgames.ManageFiles;
 
-public class QuizActivity extends AppCompatActivity implements Game {
+public class QuizActivity extends Game {
     private boolean isRight;
     private QuizQuestion qq;
 
