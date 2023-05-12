@@ -12,10 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import esir.progm.untitledsharkgames.R;
-import esir.progm.untitledsharkgames.interfaces.Game;
 import esir.progm.untitledsharkgames.ManageFiles;
 
-public class QuizActivity extends AppCompatActivity implements Game {
+public class QuizActivity extends AppCompatActivity {
     private boolean isRight;
     private QuizQuestion qq;
 
@@ -25,6 +24,8 @@ public class QuizActivity extends AppCompatActivity implements Game {
     private int score;
 
     private Intent intent;
+
+    private boolean forTraining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +38,17 @@ public class QuizActivity extends AppCompatActivity implements Game {
         Bundle b = this.intent.getExtras();
         if (b!=null) {
             this.theme = b.getString("theme");
+            this.forTraining=  b.getBoolean("training");
         } else {
             this.theme = "";
         }
-
         launch();
     }
 
-    public void launch() {
+    private void launch() {
         this.isRight = false;
-        this.qq = new QuizQuestion(getApplicationContext(), this.theme);
+        this.qq = new QuizQuestion(getApplicationContext(), this.theme, this.forTraining);
         resetQuiz();
-    }
-
-    public int getScore() {
-        return this.score;
     }
 
     /**

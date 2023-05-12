@@ -54,6 +54,22 @@ public class QuizTrainingTheme extends AppCompatActivity {
                 launchWithTheme("pokemon");
             }
         });
+
+        Button progM = findViewById(R.id.progM);
+        progM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchWithTheme("progm");
+            }
+        });
+
+        Button random = findViewById(R.id.random);
+        random.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchWithTheme("random");
+            }
+        });
     }
 
     @Override
@@ -69,10 +85,6 @@ public class QuizTrainingTheme extends AppCompatActivity {
             System.out.println("SCORE : "+score);
             mf.erase("score_tmp");
             Toast.makeText(getApplicationContext(), ("Votre score : "+score), Toast.LENGTH_LONG).show();
-            /*
-            PopUp popUp = new PopUp("score", score);
-            popUp.show(getSupportFragmentManager(), "SCORE");
-            */
         }
     }
 
@@ -81,6 +93,7 @@ public class QuizTrainingTheme extends AppCompatActivity {
         Intent intent = new Intent(QuizTrainingTheme.this, QuizActivity.class);
         Bundle b = new Bundle();
         b.putString("theme", theme);
+        b.putBoolean("training", true);
         intent.putExtras(b);
         startActivity(intent);
     }

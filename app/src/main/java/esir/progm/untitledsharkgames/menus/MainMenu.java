@@ -2,6 +2,7 @@ package esir.progm.untitledsharkgames.menus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentCallbacks;
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class MainMenu extends AppCompatActivity {
         singlePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, SinglePlayerMenu.class));
+                startActivity(new Intent(MainMenu.this, SinglePlayer.class));
             }
         });
 
@@ -90,13 +91,8 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
-        }
+        MusicPlayer.getInstance().resume();
+        isOnBackground = false;
     }
 
     @Override

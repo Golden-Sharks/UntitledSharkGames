@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_menu_background"
-    tools:context=".menus.QuizTrainingTheme">
+    tools:context=".menus.SinglePlayer">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/dancing_script_regular"
-            android:text="@string/chose_theme"
+            android:text="@string/singleplayer"
             android:textSize="40dp"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -41,49 +41,26 @@
             android:gravity="center"
             android:layout_below="@+id/title">
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/username"
+                android:hint="fill in pseudonyme"
+                />
+
             <Button
-                android:id="@+id/starwars"
+                android:id="@+id/validate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Star Wars"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/dancing_script_regular"/>
-            <Button
-                android:id="@+id/pokemon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pokemon"
-                android:textColor="@color/black"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/dancing_script_regular"/>
-            <Button
-                android:id="@+id/progM"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Programmation Mobile"
+                android:text="Valider"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white"
+                android:layout_marginTop="20pt"
                 android:fontFamily="@font/dancing_script_regular"/>
-            <Button
-                android:id="@+id/random"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Choix Aléatoire"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/dancing_script_regular"/>
+
         </LinearLayout>
 
     </RelativeLayout>

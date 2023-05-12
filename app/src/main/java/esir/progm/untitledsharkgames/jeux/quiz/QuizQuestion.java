@@ -29,7 +29,7 @@ public class QuizQuestion {
 
     private int currentQuestion;
 
-    public QuizQuestion(Context context, String theme) {
+    public QuizQuestion(Context context, String theme, boolean forTraining) {
         this.currentQuestion = 0;
         this.wrongAnswers = new String[3];
         Random rd = new Random();
@@ -42,8 +42,18 @@ public class QuizQuestion {
             case "pokemon":
                 is = context.getResources().openRawResource(R.raw.quiz_pokemon);
                 break;
+            case "progm":
+                is = context.getResources().openRawResource(R.raw.quiz_progm);
+                break;
             default:
-                is = context.getResources().openRawResource(R.raw.quiz_starwars);
+                int choice = new Random().nextInt(3);
+                if (choice==0) {
+                    is = context.getResources().openRawResource(R.raw.quiz_starwars);
+                }else if (choice==1) {
+                    is = context.getResources().openRawResource(R.raw.quiz_pokemon);
+                } else {
+                    is = context.getResources().openRawResource(R.raw.quiz_progm);
+                }
         }
         BufferedReader r = new BufferedReader(new InputStreamReader(is));
         String line;
