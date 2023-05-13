@@ -21,7 +21,7 @@ public class QuizQuestion {
 
     private int currentQuestion;
 
-    public QuizQuestion(Context context, String theme, boolean forTraining) {
+    public QuizQuestion(Context context, String theme) {
         this.currentQuestion = 0;
         this.wrongAnswers = new String[3];
         Random rd = new Random();

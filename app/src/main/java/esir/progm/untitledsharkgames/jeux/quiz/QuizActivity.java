@@ -25,8 +25,6 @@ public class QuizActivity extends AppCompatActivity {
 
     private Intent intent;
 
-    private boolean forTraining;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +36,6 @@ public class QuizActivity extends AppCompatActivity {
         Bundle b = this.intent.getExtras();
         if (b!=null) {
             this.theme = b.getString("theme");
-            this.forTraining=  b.getBoolean("training");
         } else {
             this.theme = "";
         }
@@ -47,7 +44,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void launch() {
         this.isRight = false;
-        this.qq = new QuizQuestion(getApplicationContext(), this.theme, this.forTraining);
+        this.qq = new QuizQuestion(getApplicationContext(), this.theme);
         resetQuiz();
     }
 

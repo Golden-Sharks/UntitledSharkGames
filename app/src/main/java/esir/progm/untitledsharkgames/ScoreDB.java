@@ -38,7 +38,6 @@ public class ScoreDB {
         String line;
         try {
             while ((line=r.readLine()) != null) {
-                System.out.println(line);
                 String[] splited = line.split(",");
                 Pair<String, Integer> score = new Pair<>(splited[0], Integer.parseInt(splited[1]));
                 scores.add(score);
@@ -64,6 +63,7 @@ public class ScoreDB {
                 if(score > leaderborad.get(i).second) {
                     leaderborad.add(i, new Pair<>(username, score));
                     leaderborad.remove(leaderborad.size()-1);
+                    break;
                 }
             }
         }
@@ -89,4 +89,6 @@ public class ScoreDB {
             System.out.print("<" + score.first + ", " + score.second + "> / ");
         }
     }
+
+    public List<Pair<String, Integer>> getDB(){return leaderborad;}
 }
