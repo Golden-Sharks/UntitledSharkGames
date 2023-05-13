@@ -80,6 +80,7 @@ public class MultiHeberger extends AppCompatActivity {
                 String adress = nameToAdress.get(name);
                 Communication.setIpHost(adress);
                 Communication.sendMessage(pseudonyme);
+                launchGames();
             }
         });
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfNames);

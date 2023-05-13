@@ -92,11 +92,28 @@ public class Server {
                     }
 
                     if (init) { // On veut récupérer le pseudo et l'IP
-                        if (mh!=null) this.mh.addDevice(message, socket.getInetAddress()+"");
-                        else this.mc.launchGames();
+                        if (mh!=null) {
+
+                            String finalMessage = message;
+                            this.mh.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String ip = parseIP(socket.getInetAddress().toString());
+                                    mh.addDevice(finalMessage, ip);
+                                }
+                            });
+                        }
+                        else {
+                            this.mc.runOnUiThread(new Runnable(){
+                                @Override
+                                public void run() {
+                                   mc.launchGames();
+                                }
+                            });
+                        }
                     } else {
                         String msg = "Score de l'adversaire : "+message;
-                        dispMsg.runOnUiThread(new Runnable() {
+                        this.dispMsg.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 dispMsg.setMsg(msg);
@@ -109,6 +126,26 @@ public class Server {
                 System.out.println("AAAAA : server is stopped (it shouldn't)");
             }
         }
+    }
+
+    private String parseIP(String ip) {
+        StringBuilder cleanIP = new StringBuilder();
+        int nbInNumberBlock = 0;
+        int nbOfPoints = 0;
+        for (int i=0 ; i<ip.length() ; i++){
+            char c = ip.charAt(i);
+            if (c=='.') {
+                nbInNumberBlock = 0;
+                nbOfPoints++;
+                if (nbOfPoints>3) break;
+                cleanIP.append(c);
+            } else if(c<='9' && c>='0') {
+                nbInNumberBlock++;
+                if (nbInNumberBlock>3) break;
+                cleanIP.append(c);
+            }
+        }
+        return cleanIP.toString();
     }
 
     public String getIpAddress() {
