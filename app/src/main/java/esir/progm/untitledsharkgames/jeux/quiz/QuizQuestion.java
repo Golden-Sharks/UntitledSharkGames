@@ -1,20 +1,12 @@
 package esir.progm.untitledsharkgames.jeux.quiz;
 
 import android.content.Context;
-import android.os.Environment;
-import android.widget.Toast;
-
-import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import esir.progm.untitledsharkgames.R;
 
@@ -109,3 +101,4 @@ public class QuizQuestion {
         this.wrongAnswers[2] = splitted[4];
     }
 }
+

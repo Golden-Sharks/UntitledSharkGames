@@ -64,21 +64,10 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
-                android:id="@+id/progM"
+                android:id="@+id/progm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Programmation Mobile"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:layout_marginBottom="25dp"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/dancing_script_regular"/>
-            <Button
-                android:id="@+id/random"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Choix Aléatoire"
+                android:text="Prog M"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"

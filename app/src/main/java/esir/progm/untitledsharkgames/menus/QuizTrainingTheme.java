@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import esir.progm.untitledsharkgames.PopUp;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ManageFiles;
@@ -55,19 +54,11 @@ public class QuizTrainingTheme extends AppCompatActivity {
             }
         });
 
-        Button progM = findViewById(R.id.progM);
-        progM.setOnClickListener(new View.OnClickListener() {
+        Button progm = findViewById(R.id.progm);
+        progm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchWithTheme("progm");
-            }
-        });
-
-        Button random = findViewById(R.id.random);
-        random.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchWithTheme("random");
             }
         });
     }
@@ -85,6 +76,10 @@ public class QuizTrainingTheme extends AppCompatActivity {
             System.out.println("SCORE : "+score);
             mf.erase("score_tmp");
             Toast.makeText(getApplicationContext(), ("Votre score : "+score), Toast.LENGTH_LONG).show();
+            /*
+            PopUp popUp = new PopUp("score", score);
+            popUp.show(getSupportFragmentManager(), "SCORE");
+            */
         }
     }
 
@@ -93,7 +88,6 @@ public class QuizTrainingTheme extends AppCompatActivity {
         Intent intent = new Intent(QuizTrainingTheme.this, QuizActivity.class);
         Bundle b = new Bundle();
         b.putString("theme", theme);
-        b.putBoolean("training", true);
         intent.putExtras(b);
         startActivity(intent);
     }
