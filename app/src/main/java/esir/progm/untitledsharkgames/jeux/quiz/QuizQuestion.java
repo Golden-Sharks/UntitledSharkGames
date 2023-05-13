@@ -1,20 +1,12 @@
 package esir.progm.untitledsharkgames.jeux.quiz;
 
 import android.content.Context;
-import android.os.Environment;
-import android.widget.Toast;
-
-import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import esir.progm.untitledsharkgames.R;
 
@@ -42,8 +34,18 @@ public class QuizQuestion {
             case "pokemon":
                 is = context.getResources().openRawResource(R.raw.quiz_pokemon);
                 break;
+            case "progm":
+                is = context.getResources().openRawResource(R.raw.quiz_progm);
+                break;
             default:
-                is = context.getResources().openRawResource(R.raw.quiz_starwars);
+                int choice = new Random().nextInt(3);
+                if (choice==0) {
+                    is = context.getResources().openRawResource(R.raw.quiz_starwars);
+                }else if (choice==1) {
+                    is = context.getResources().openRawResource(R.raw.quiz_pokemon);
+                } else {
+                    is = context.getResources().openRawResource(R.raw.quiz_progm);
+                }
         }
         BufferedReader r = new BufferedReader(new InputStreamReader(is));
         String line;
@@ -99,3 +101,4 @@ public class QuizQuestion {
         this.wrongAnswers[2] = splitted[4];
     }
 }
+

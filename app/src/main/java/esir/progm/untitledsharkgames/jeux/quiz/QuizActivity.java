@@ -12,10 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import esir.progm.untitledsharkgames.R;
-import esir.progm.untitledsharkgames.interfaces.Game;
 import esir.progm.untitledsharkgames.ManageFiles;
 
-public class QuizActivity extends Game {
+public class QuizActivity extends AppCompatActivity {
     private boolean isRight;
     private QuizQuestion qq;
 
@@ -40,18 +39,13 @@ public class QuizActivity extends Game {
         } else {
             this.theme = "";
         }
-
         launch();
     }
 
-    public void launch() {
+    private void launch() {
         this.isRight = false;
         this.qq = new QuizQuestion(getApplicationContext(), this.theme);
         resetQuiz();
-    }
-
-    public int getScore() {
-        return this.score;
     }
 
     /**
