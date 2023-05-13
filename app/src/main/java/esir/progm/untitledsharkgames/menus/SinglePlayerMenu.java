@@ -142,6 +142,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
                                 score += intent.getIntExtra("score", 0);
                             }
                             nb_results++;
+                            System.out.println(nb_results);
                             if(nb_results==nb_games) {
                                 end();
                             } else {
@@ -175,6 +176,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
     }
 
     private void end() {
+        System.out.println("EEND !");
         items.setVisibility(View.GONE);
         final_score.setText(score + "pts");
         finish_screen.setVisibility(View.VISIBLE);
