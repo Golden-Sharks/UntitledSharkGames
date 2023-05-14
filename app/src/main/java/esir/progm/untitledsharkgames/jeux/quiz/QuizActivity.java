@@ -77,7 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
         pb.setProgress(100);
-        this.mCountDownTimer = new CountDownTimer(DURATION,100) {
+        this.mCountDownTimer = new CountDownTimer(DURATION,DURATION/100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current = pb.getProgress();
