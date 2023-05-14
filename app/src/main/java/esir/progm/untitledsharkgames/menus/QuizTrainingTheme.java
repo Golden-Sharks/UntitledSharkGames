@@ -96,10 +96,6 @@ public class QuizTrainingTheme extends AppCompatActivity {
             System.out.println("SCORE : "+score);
             mf.erase("score_tmp");
             Toast.makeText(getApplicationContext(), ("Votre score : "+score), Toast.LENGTH_LONG).show();
-            /*
-            PopUp popUp = new PopUp("score", score);
-            popUp.show(getSupportFragmentManager(), "SCORE");
-            */
         }
     }
 

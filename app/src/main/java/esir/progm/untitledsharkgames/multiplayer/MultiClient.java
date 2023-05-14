@@ -1,20 +1,15 @@
 package esir.progm.untitledsharkgames.multiplayer;
 
-import androidx.activity.result.ActivityResultLauncher;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
-import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class MultiClient extends Multijoueur {
     private TextView info;

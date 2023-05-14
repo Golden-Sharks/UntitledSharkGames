@@ -1,5 +1,9 @@
 package esir.progm.untitledsharkgames.Communication;
-import android.content.Context;
+/**
+ * Code source : https://androidsrc.net/android-client-server-using-sockets-server-implementation/?utm_content=cmp-true
+ * Je l'ai adapté au projet afin qu'il corresponde mieux au besoin
+ */
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,18 +20,17 @@ import esir.progm.untitledsharkgames.multiplayer.MultiClient;
 import esir.progm.untitledsharkgames.multiplayer.MultiHeberger;
 
 public class Server {
-    Context context;
-    ServerSocket serverSocket;
-    static final int socketServerPORT = 8080;
+    private ServerSocket serverSocket;                  // Socket utilisé par la classe
+    private static final int socketServerPORT = 8080;   // Port de communication par défaut
 
     public Server(Multijoueur multi) {
         Thread socketServerThread = new Thread(new SocketServerThread(multi));
         socketServerThread.start();
     }
 
-    public int getPort() {
-        return socketServerPORT;
-    }
+    /**
+     * Détruit proprement le serveur
+     */
     public void onDestroy() {
         if (serverSocket != null) {
             try {
@@ -38,38 +41,36 @@ public class Server {
         }
     }
     private class SocketServerThread extends Thread {
+        // Classe d'origine du serveur
         private Multijoueur multi;
-        private MultiHeberger mh;
-        private MultiClient mc;
-        private boolean init;
 
         public SocketServerThread(Multijoueur multi) {
             this.multi = multi;
-            this.init = false;
         }
 
         @Override
         public void run() {
             try {
-                // create ServerSocket using specified port
+                // Créé le serveur en utilisant le port par défaut
                 serverSocket = new ServerSocket(socketServerPORT);
+                // Boucle infinie pour capter les messages
                 while (true) {
-                    Socket socket = serverSocket.accept();
+                    Socket socket = serverSocket.accept(); // Accepte les communications
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
                     byte[] buffer = new byte[1024];
                     int bytesRead;
+                    /*      Lecture des messages envoyés sur le socket      */
                     InputStream inputStream = socket.getInputStream();
                     StringBuilder message = new StringBuilder();
-                    /*
-                     * notice: inputStream.read() will block if no data return
-                     */
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         byteArrayOutputStream.write(buffer, 0, bytesRead);
                         message.append(byteArrayOutputStream.toString("UTF-8"));
                     }
+                    /*      Si le message commence par un "/" : étoffe ce dernier avec l'adresse IP     */
                     if (message.charAt(0)=='/') {
                         message.append("/" + socket.getInetAddress().getHostAddress());
                     }
+                    // Envoit du message à la classe du serveur
                     String finalMessage = message.toString();
                     multi.runOnUiThread(new Runnable() {
                         @Override
@@ -85,28 +86,25 @@ public class Server {
         }
     }
 
+    /**
+     * Retourne l'adresse IP du socket
+     */
     public String getIpAddress() {
         String ip = "";
         try {
             Enumeration<NetworkInterface> enumNetworkInterfaces = NetworkInterface.getNetworkInterfaces();
-            int nbOfInterface = 0;
             while (enumNetworkInterfaces.hasMoreElements()) {
-                nbOfInterface++;
                 NetworkInterface networkInterface = enumNetworkInterfaces.nextElement();
                 Enumeration<InetAddress> enumInetAddress = networkInterface.getInetAddresses();
-                int nbIP = 0;
                 while (enumInetAddress.hasMoreElements()) {
                     InetAddress inetAddress = enumInetAddress.nextElement();
                     if (inetAddress.isSiteLocalAddress()) {
                         ip += inetAddress.getHostAddress();
-                        nbIP++;
                     }
                 }
-                System.out.println("interface : "+nbOfInterface+" => "+nbIP+" @ présentes");
             }
         } catch (SocketException e) {
             e.printStackTrace();
-            ip += "Something Wrong! " + e.toString() + "\n";
         }
         return ip;
     }

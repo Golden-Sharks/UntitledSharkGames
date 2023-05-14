@@ -102,7 +102,7 @@ public class WhrilOtter extends AppCompatActivity {
     /**********************************************************************************************/
     private class WhrilOtterTask extends AsyncTask<Void, Double, Integer> {
         /*                    Final atributes                    */
-        private final int TIME_OF_GAME = 5000;
+        private final int TIME_OF_GAME = 10000;
         private final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE,
                 AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         private static final int MAX_ROTATION_SPEED = 100;

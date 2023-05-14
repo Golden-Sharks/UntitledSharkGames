@@ -2,7 +2,6 @@ package esir.progm.untitledsharkgames.multiplayer;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +22,7 @@ import esir.progm.untitledsharkgames.Communication.Server;
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
+import esir.progm.untitledsharkgames.jeux.feedTheShark.FeedTheShark;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public abstract class Multijoueur extends AppCompatActivity {
@@ -33,22 +33,16 @@ public abstract class Multijoueur extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
     private boolean isOnBackground = false;
     protected String[] relevant;
-
     protected int score = 0;
     protected String pseudonyme;
     public ActivityResultLauncher<Intent> activityResultLauncher;
     protected Server server;
     protected List<Class> games;
     protected int nb_results = 0;
-
-    protected final Class[][] POUL = {{WhrilOtter.class},{SharkSlap.class}};//{{WhrilOtter.class},{SharkSlap.class}};
+    protected final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SharkSlap.class}};
     protected int[] tirageAuSort = new int[3];
-
-    public static boolean isScoreReceived = false;
-
     public abstract void setMsg(String message);
 
     protected void onCreate(Bundle savedInstanceState) {

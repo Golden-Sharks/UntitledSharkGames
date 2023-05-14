@@ -6,7 +6,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import java.util.Random;
 
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
-import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class MultiHeberger extends Multijoueur {
 

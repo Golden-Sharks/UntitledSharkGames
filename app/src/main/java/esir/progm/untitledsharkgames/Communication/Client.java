@@ -1,7 +1,9 @@
 package esir.progm.untitledsharkgames.Communication;
+/**
+ * Code source : https://androidsrc.net/android-client-server-using-sockets-client-implementation/
+ */
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,9 +12,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client extends AsyncTask<Void, Void, String> {
-    private String dstAddress;
-    private final int PORT = 8080;
-    private String message;
+    private String dstAddress;      // Adresse à laquelle envoyer le message
+    private final int PORT = 8080;  // Port par défaut : 8080
+    private String message;         // Message à transmettre
 
     public Client(String addr, String message) {
         dstAddress = addr;
@@ -23,7 +25,6 @@ public class Client extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... arg0) {
         Socket socket = null;
         try {
-            System.out.println("try to join : "+dstAddress+":"+PORT);
             socket = new Socket(dstAddress, PORT);
             // écriture du message
             OutputStream outputStream = socket.getOutputStream();
@@ -31,9 +32,7 @@ public class Client extends AsyncTask<Void, Void, String> {
             printStream.print(this.message);
             printStream.close();
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (socket != null) {

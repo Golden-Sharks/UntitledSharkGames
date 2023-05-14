@@ -4,10 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -22,8 +18,8 @@ import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ManageFiles;
 
 public class QuizActivity extends AppCompatActivity {
-
-    private final int DURATION = 6000;
+    private final int DURATION = 6000;      // Durée d'une question en milli-secondes
+    /*              HIDE UI PARAMETERS              */
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -31,15 +27,11 @@ public class QuizActivity extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     private boolean isOnBackground = false;
-    private boolean isRight;
-    private QuizQuestion qq;
-
-    private CountDownTimer mCountDownTimer;
-    private String theme;
-
-    private int score;
-
-    private Intent intent;
+    private boolean isRight; // Le joueur à cliquer sur la bonne réponse
+    private QuizQuestion qq; // L'instance de QuizQuestion permet de charger les question et les réponses
+    private CountDownTimer mCountDownTimer; // Timer de chaque question
+    private String theme; // Theme du quiz
+    private int score; // Score du joueur
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +46,8 @@ public class QuizActivity extends AppCompatActivity {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
-
-        this.intent = getIntent();
-        Bundle b = this.intent.getExtras();
+        // Set up le theme en fonction de l'intent utilisé pour créer l'activité
+        Bundle b = getIntent().getExtras();
         if (b!=null) {
             this.theme = b.getString("theme");
         } else {
@@ -65,6 +56,9 @@ public class QuizActivity extends AppCompatActivity {
         launch();
     }
 
+    /**
+     * Initialisation
+      */
     private void launch() {
         this.isRight = false;
         this.qq = new QuizQuestion(getApplicationContext(), this.theme);
@@ -72,7 +66,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the progress bar
+     * Set la progress bar
      */
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
@@ -92,8 +86,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the TextView containing the question
-     * @param question : this question to display
+     * Set up la textView qui contient la question
+     * @param question : La question à afficher
      */
     private void setTextView(String question) {
         TextView score = findViewById(R.id.score);
@@ -103,8 +97,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the four buttons of the quiz interface
-     * @param answers : the differents answers
+     * Set up les 4 boutons de l'interface
+     * @param answers : les différentes réponses
      */
     private void setButtons(String[] answers) {
         Button bt1 = findViewById(R.id.rep_1);
@@ -149,6 +143,9 @@ public class QuizActivity extends AppCompatActivity {
         changeRectangleColor(0);
     }
 
+    /**
+     * Change la couleur du rectangle désigné
+     */
     private void changeRectangleColor(int indice) {
         Button[] reponses = {findViewById(R.id.rep_1),findViewById(R.id.rep_2),findViewById(R.id.rep_3),findViewById(R.id.rep_4)};
         for (int i=1 ; i<5 ; i++) {
@@ -156,12 +153,15 @@ public class QuizActivity extends AppCompatActivity {
             if (i==indice) {
                 current.setBackgroundColor(getResources().getColor(R.color.persoLightBlue));
             } else {
-                current.setBackgroundColor(getResources().getColor(R.color.persoDarkBlue));
+                current.setBackgroundColor(getResources().getColor(R.color.persoWhite));
             }
         }
 
     }
 
+    /**
+     * Met fin au round en cours
+     */
     private void endRound() {
         if (isRight) {
             this.score += 100;
@@ -183,7 +183,9 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Change de question
+     */
     private void resetQuiz() {
         String[] questionStrings = qq.getInterface();
         if (this.mCountDownTimer != null) this.mCountDownTimer.cancel();
