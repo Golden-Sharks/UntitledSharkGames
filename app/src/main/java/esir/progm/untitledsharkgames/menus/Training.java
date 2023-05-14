@@ -71,8 +71,8 @@ public class Training extends AppCompatActivity {
             }
         });
 
-        Button sharkWind = findViewById(R.id.sharkWind);
-        sharkWind.setOnClickListener(new View.OnClickListener() {
+        Button whirlOtter = findViewById(R.id.WhirlOtter);
+        whirlOtter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Training.this, WhrilOtter.class));

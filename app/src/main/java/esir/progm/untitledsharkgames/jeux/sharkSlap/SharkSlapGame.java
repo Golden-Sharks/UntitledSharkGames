@@ -1,6 +1,5 @@
 package esir.progm.untitledsharkgames.jeux.sharkSlap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,11 +12,14 @@ import esir.progm.untitledsharkgames.R;
 
 public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
 
+    /*                   Final attributes                    */
     private final int DURATION_MILLISECONDS = 10000;
+
+    /*                       atributes                       */
     private ArrayList<Place> places;
-    private SharkSlap activity;
-    private final Random random = new Random();
     private long timeBeforeNext = 0;
+    private final Random random = new Random();
+    private SharkSlap activity;
 
     public SharkSlapGame(SharkSlap activity, Context context, ArrayList<Place> places) {
         this.activity = activity;
@@ -31,11 +33,13 @@ public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
         long last_up = System.currentTimeMillis();
 
         while(System.currentTimeMillis()-startTime<this.DURATION_MILLISECONDS) {
+            // wait cooldown beafore re-up a shark
             if(timeBeforeNext<(System.currentTimeMillis()-last_up)){
+                // Randomly select shark
                 Random r = new Random();
                 int to_up = r.nextInt(places.size());
                 places.get(to_up).up();
-                timeBeforeNext = (long) random.nextInt(2000);
+                timeBeforeNext = random.nextInt(2000);
                 last_up = System.currentTimeMillis();
             }
         }

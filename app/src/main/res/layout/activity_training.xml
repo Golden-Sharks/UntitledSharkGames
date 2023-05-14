@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_menu_background"
+    android:background="@drawable/score_background"
     tools:context=".menus.Training">
 
     <RelativeLayout
@@ -18,10 +18,10 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/dancing_script_regular"
             android:text="@string/training_title"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="50dp"/>
 
         <ImageButton
@@ -63,11 +63,12 @@
                 android:layout_marginBottom="25dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/dancing_script_regular"/>
+
             <Button
-                android:id="@+id/sharkWind"
+                android:id="@+id/WhirlOtter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Shark wind"
+                android:text="WhirlOtter"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"

@@ -1,21 +1,20 @@
 package esir.progm.untitledsharkgames;
 
-import android.content.Context;
 import android.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreDB {
-
+    // instance
     private static ScoreDB instance;
-    private ArrayList<Pair<String, Integer>> leaderborad;
 
+    /*                    attributes                    */
+    private ArrayList<Pair<String, Integer>> leaderborad;
     private InputStream is;
     private FileOutputStream os;
 
@@ -31,6 +30,10 @@ public class ScoreDB {
         return instance;
     }
 
+    /**
+     * Returns bests scores
+     * @return list of Pair username, score
+     */
     private ArrayList<Pair<String, Integer>> loadScores(){
         ArrayList<Pair<String, Integer>> scores = new ArrayList<>();
 
@@ -48,6 +51,11 @@ public class ScoreDB {
         return scores;
     }
 
+    /**
+     * Check is a score can be in the leaderboard
+     * @param score score to analyse
+     * @return boolean : True if score is on the leaderboard, False otherwise
+     */
     public boolean isOnLearderboard(int score) {
         for (Pair<String, Integer> leader: leaderborad ) {
             if(score > leader.second) {
@@ -57,6 +65,11 @@ public class ScoreDB {
         return false;
     }
 
+    /**
+     * Add new score in the leaderboard
+     * @param username new score username
+     * @param score associate score
+     */
     public void addOnLeaderboard(String username, int score) {
         if(isOnLearderboard(score)) {
             for(int i=0; i<leaderborad.size(); i++) {
@@ -70,6 +83,9 @@ public class ScoreDB {
         saveScoreBoard();
     }
 
+    /**
+     * Save leaderboard in internal storage
+     */
     public void saveScoreBoard() {
         try{
             os.getChannel().truncate(0);
@@ -84,6 +100,7 @@ public class ScoreDB {
         }
     }
 
+    // Debug function
     public void printDB() {
         for (Pair<String, Integer> score : leaderborad) {
             System.out.print("<" + score.first + ", " + score.second + "> / ");

@@ -12,6 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/singleplayer_exit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="5pt"
+            android:layout_marginTop="5pt"
+            android:layout_marginEnd="5pt"
+            android:layout_marginBottom="5pt"
+            android:background="@null"
+            android:src="@drawable/exit_image_white" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
