@@ -13,7 +13,7 @@ import esir.progm.untitledsharkgames.R;
 
 public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
 
-    private final int DURATION_MILLISECONDS = 30000;
+    private final int DURATION_MILLISECONDS = 5000;
     private ArrayList<Place> places;
     private SharkSlap activity;
     private final Random random = new Random();

@@ -1,12 +1,7 @@
 package esir.progm.untitledsharkgames.multiplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,39 +13,28 @@ import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
 
-import esir.progm.untitledsharkgames.Communication.Server;
 import esir.progm.untitledsharkgames.R;
-import esir.progm.untitledsharkgames.jeux.Cliquer;
+import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
-public class MultiHeberger extends AppCompatActivity {
+public class MultiHeberger extends Multijoueur {
 
     private ArrayAdapter listDevices;
     private HashMap<String, String> nameToAdress;
     private List<String> listOfNames;
-    private String pseudonyme;
-    private Server server;
+    private int[] tirageAuSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_multi_heberger);
-        Intent intent = getIntent();
-        if (intent != null) {
-            pseudonyme = intent.getStringExtra("pseudo");
-        } else {
-            pseudonyme = "default";
-        }
-        server = new Server(this);
+        ((TextView)findViewById(R.id.J1_pseudo)).setText(pseudonyme);
         setWidgets();
         setList();
     }
 
     private void setWidgets() {
         TextView infoip = findViewById(R.id.infoip);
-        infoip.setText("Votre code : "+getCode());
+        if (infoip != null) infoip.setText("Votre code : "+getCode());
         ImageButton back = findViewById(R.id.exit);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +63,12 @@ public class MultiHeberger extends AppCompatActivity {
                 String name = (String) lv.getItemAtPosition(position);
                 String adress = nameToAdress.get(name);
                 Communication.setIpHost(adress);
-                Communication.sendMessage(pseudonyme);
+                createGameList();
                 launchGames();
             }
         });
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfNames);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_list_item_1, listOfNames);
         lv.setAdapter(arrayAdapter);
         this.listDevices = arrayAdapter;
     }
@@ -94,9 +79,32 @@ public class MultiHeberger extends AppCompatActivity {
         listDevices.notifyDataSetChanged();
     }
 
-    public void launchGames() {
-        server.onDestroy();
-        startActivity(new Intent(MultiHeberger.this, Cliquer.class));
+
+
+
+    private void /*List<Class>*/ createGameList() {
+        /*List<Class> games = new ArrayList<>();
+        // Choix aléatoire : 1 jeu tiré au sort par catégorie
+        for(int i=0; i<3; i++) {
+            int low = 1;
+            int high = 3;
+            int result = new Random().nextInt(high-low) + low;
+
+            if(result == 1) {
+                games.add(SharkSlap.class);
+            } else if (result == 2) {
+                games.add(QuizActivity.class);
+            }
+        }
+        return games;*/
+        games = new LinkedList<>();
+        this.tirageAuSort = new int[3];
+        this.tirageAuSort[0] = 1;
+        this.tirageAuSort[1] = 2;
+        this.tirageAuSort[2] = 3;
+        games.add(SharkSlap.class);
+        String message = "["+tirageAuSort[0]+","+tirageAuSort[1]+","+tirageAuSort[2];
+        Communication.sendMessage(message);
     }
 
     private String getCode() {
@@ -115,9 +123,23 @@ public class MultiHeberger extends AppCompatActivity {
         return code.toString();
     }
 
+
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        server.onDestroy();
+    public void setMsg(String message) {
+        char c = message.charAt(0);
+        String restOfMsg = message.substring(1);
+        if (c == '/') {
+            // IP + pseudo
+            this.relevant = restOfMsg.split("/");
+            String pseudo = relevant[0];
+            String ip = relevant[1];
+            addDevice(pseudo, ip);
+        } else if (c == '_') {
+            // Pseudo + score
+            this.relevant = restOfMsg.split("_");
+            System.out.println("RECEIVED SCORE : "+relevant[0]+"/"+relevant[1]);
+            playGame(nb_results);
+        }
     }
 }
