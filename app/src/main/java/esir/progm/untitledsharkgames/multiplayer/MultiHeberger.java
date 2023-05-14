@@ -6,8 +6,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResult;
 
 import java.util.LinkedList;
 import java.util.HashMap;
@@ -23,7 +26,6 @@ public class MultiHeberger extends Multijoueur {
     private ArrayAdapter listDevices;
     private HashMap<String, String> nameToAdress;
     private List<String> listOfNames;
-    private int[] tirageAuSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +112,6 @@ public class MultiHeberger extends Multijoueur {
         return code.toString();
     }
 
-
-
     @Override
     public void setMsg(String message) {
         char c = message.charAt(0);
@@ -125,8 +125,21 @@ public class MultiHeberger extends Multijoueur {
         } else if (c == '_') {
             // Pseudo + score
             this.relevant = restOfMsg.split("_");
-            System.out.println("RECEIVED SCORE : "+relevant[0]+"/"+relevant[1]);
-            playGame(nb_results);
+            drawAdversaryUiScores(relevant[0], Integer.parseInt(relevant[1]));
+        }
+    }
+
+    protected void onGameResult(ActivityResult activityResult) {
+        super.onGameResult(activityResult);
+        if (nb_results!=3) {
+            Button next = findViewById(R.id.next);
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Communication.sendMessage("F_");
+                    launchGames(nb_results);
+                }
+            });
         }
     }
 }

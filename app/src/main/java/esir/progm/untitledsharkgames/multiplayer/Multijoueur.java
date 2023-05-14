@@ -2,6 +2,7 @@ package esir.progm.untitledsharkgames.multiplayer;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -43,8 +44,10 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected List<Class> games;
     protected int nb_results = 0;
 
-    protected final Class[][] POUL = {{WhrilOtter.class},{SharkSlap.class}};
-    protected int[] tirageAuSort;
+    protected final Class[][] POUL = {{WhrilOtter.class},{SharkSlap.class}};//{{WhrilOtter.class},{SharkSlap.class}};
+    protected int[] tirageAuSort = new int[3];
+
+    public static boolean isScoreReceived = false;
 
     public abstract void setMsg(String message);
 
@@ -66,7 +69,6 @@ public abstract class Multijoueur extends AppCompatActivity {
             pseudonyme = "default";
         }
         server = new Server(this);
-        this.tirageAuSort = new int[3];
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -75,6 +77,7 @@ public abstract class Multijoueur extends AppCompatActivity {
                     }
                 });
     }
+
     protected void launchGames(int nb) {
         if (nb==2) {
             Intent intent = new Intent(Multijoueur.this, games.get(nb));
@@ -91,28 +94,36 @@ public abstract class Multijoueur extends AppCompatActivity {
             Intent intent = activityResult.getData();
             if(intent != null) {
                 score += intent.getIntExtra("score", 0);
-                Communication.sendMessage("_"+pseudonyme+"_"+score);
             }
+            drawOwnUiScores();
             nb_results++;
             findViewById(R.id.init).setVisibility(View.GONE);
             findViewById(R.id.scoreBoard).setVisibility(View.VISIBLE);
+            Communication.sendMessage("_"+pseudonyme+"_"+score);
+            if (nb_results==games.size()) {
+                drawScore();
+            }
         }
     }
 
-    protected void playGame(int nb) {
-        ((TextView)findViewById(R.id.J2_pseudo)).setText(this.pseudonyme+" : "+this.score);
-        ((TextView)findViewById(R.id.J2_pseudo)).setText(this.relevant[0]+" : "+this.relevant[1]);
+    protected void drawOwnUiScores() {
+        ((TextView)findViewById(R.id.J1_pseudo)).setText(this.pseudonyme+" : "+this.score);
         drawRectangle(findViewById(R.id.J1_score), this.score);
+    }
+
+    protected void drawAdversaryUiScores(String pseudo, int score) {
+        ((TextView)findViewById(R.id.J2_pseudo)).setText(this.relevant[0]+" : "+this.relevant[1]);
         drawRectangle(findViewById(R.id.J2_score), Integer.parseInt(this.relevant[1]));
-        if (nb<games.size()) {
-            try {
-                Thread.sleep(10000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            launchGames(nb);//activityResultLauncher.launch(new Intent(Multijoueur.this, games.get(nb)));
-        } else {
-            Button home = findViewById(R.id.home);
+    }
+
+    protected void drawScore() {
+        if (nb_results==games.size()) {
+            if (this.score > Integer.parseInt(relevant[1])) ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
+            else if (this.score < Integer.parseInt(relevant[1])) ((TextView)findViewById(R.id.victory)).setText("PERDU");
+            else ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
+
+            Button home = findViewById(R.id.next);
+            home.setText("HOME");
             home.setVisibility(View.VISIBLE);
             home.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,8 +134,8 @@ public abstract class Multijoueur extends AppCompatActivity {
         }
     }
 
-    protected void drawRectangle(ImageView rct, int width) {
-        rct.getLayoutParams().width = width;
+    protected void drawRectangle(ImageView rct, int score) {
+        rct.getLayoutParams().width = score * rct.getMaxWidth() / 5000;
         rct.requestLayout();
     }
 

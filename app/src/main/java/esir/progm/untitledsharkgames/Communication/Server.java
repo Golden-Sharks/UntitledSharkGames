@@ -54,8 +54,6 @@ public class Server {
                 // create ServerSocket using specified port
                 serverSocket = new ServerSocket(socketServerPORT);
                 while (true) {
-                    // block the call until connection is created and return
-                    // Socket object
                     Socket socket = serverSocket.accept();
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
                     byte[] buffer = new byte[1024];

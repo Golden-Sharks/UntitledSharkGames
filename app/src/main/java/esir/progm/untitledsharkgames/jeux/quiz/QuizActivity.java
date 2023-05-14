@@ -165,6 +165,7 @@ public class QuizActivity extends AppCompatActivity {
     private void endRound() {
         if (isRight) {
             this.score += 100;
+            isRight = false;
         }
         boolean isEnd = qq.setUpNewQuestion();
         if (!isEnd) {

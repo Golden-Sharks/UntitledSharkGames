@@ -1,5 +1,6 @@
 package esir.progm.untitledsharkgames.jeux.WhrilOtter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,7 +50,7 @@ public class WhrilOtter extends AppCompatActivity {
 
         View decor = getWindow().getDecorView();
         decor.setOnSystemUiVisibilityChangeListener(visibility -> {
-            if(visibility==0) {
+            if (visibility == 0) {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
@@ -67,7 +68,7 @@ public class WhrilOtter extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         // stop music player when activity is on pause
-        if(isOnBackground) {
+        if (isOnBackground) {
             MusicPlayer.getInstance().pause();
         }
     }
@@ -75,7 +76,7 @@ public class WhrilOtter extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isOnBackground) {
+        if (!isOnBackground) {
             MusicPlayer.getInstance().stop();
             MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
         } else {
@@ -87,7 +88,7 @@ public class WhrilOtter extends AppCompatActivity {
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        if(level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
+        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
                 level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND ||
                 level == ComponentCallbacks2.TRIM_MEMORY_MODERATE ||
                 level == ComponentCallbacks2.TRIM_MEMORY_COMPLETE) {
@@ -101,6 +102,7 @@ public class WhrilOtter extends AppCompatActivity {
     /**********************************************************************************************/
     private class WhrilOtterTask extends AsyncTask<Void, Double, Integer> {
         /*                    Final atributes                    */
+        private final int TIME_OF_GAME = 5000;
         private final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE,
                 AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         private static final int MAX_ROTATION_SPEED = 100;
@@ -121,8 +123,13 @@ public class WhrilOtter extends AppCompatActivity {
         private short[] buffer;
 
         public WhrilOtterTask() {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(WhrilOtter.this, new String[] { Manifest.permission.RECORD_AUDIO }, 0);
+            }
             this.audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE);
         }
+
 
         @Override
         protected void onCancelled() {
@@ -155,7 +162,7 @@ public class WhrilOtter extends AppCompatActivity {
 
                     // Main Loop
                     long start = System.currentTimeMillis();
-                    while (isRecording && (System.currentTimeMillis()-start <30000)) {
+                    while (isRecording && (System.currentTimeMillis()-start <TIME_OF_GAME)) {
                         // read values
                         int bytesRead = audioRecord.read(buffer, 0, BUFFER_SIZE);
 
@@ -204,7 +211,7 @@ public class WhrilOtter extends AppCompatActivity {
             super.onPostExecute(integer);
             // Creat new intent and push score
             Intent intent = new Intent();
-            intent.putExtra("score", nb_tours*100);
+            intent.putExtra("score", nb_tours*50);
             setResult(78, intent);
             // stop media player
             MusicPlayer.getInstance().stop();
@@ -220,7 +227,7 @@ public class WhrilOtter extends AppCompatActivity {
             // If the image has made a complete rotation, we update counter and reset rotation to zero
             if (imageView.getRotation() <= -360f) {
                 nb_tours++;
-                textView.setText(String.valueOf((int) nb_tours*100));
+                textView.setText(String.valueOf((int) nb_tours*50));
 
                 // Réinitialiser la rotation de l'image
                 imageView.setRotation(imageView.getRotation() + 360f);

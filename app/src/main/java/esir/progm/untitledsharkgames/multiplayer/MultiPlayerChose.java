@@ -1,8 +1,11 @@
 package esir.progm.untitledsharkgames.multiplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 
 public class MultiPlayerChose extends AppCompatActivity {
 
@@ -39,6 +43,10 @@ public class MultiPlayerChose extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (pseudoValid()) {
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MultiPlayerChose.this, new String[] { Manifest.permission.RECORD_AUDIO }, 1000);
+                    }
                     Intent intent = new Intent(MultiPlayerChose.this, MultiClient.class);
                     intent.putExtra("pseudo", ((EditText)findViewById(R.id.pseudo)).getText().toString());
                     startActivity(intent);

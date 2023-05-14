@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public class MultiClient extends Multijoueur {
             indice++;
         }
         finalIP.append(code);
-        System.out.println("IP : "+finalIP);
         return finalIP.toString();
     }
 
@@ -89,8 +89,9 @@ public class MultiClient extends Multijoueur {
             } else if (c == '_') {
                 // Pseudo + score
                 this.relevant = restOfMsg.split("_");
-                System.out.println("RECEIVED SCORE : "+relevant[0]+"/"+relevant[1]);
-                playGame(nb_results);
+                drawAdversaryUiScores(relevant[0], Integer.parseInt(relevant[1]));
+            } else if (c=='F') {
+                launchGames(nb_results);
             }
         }
     }
