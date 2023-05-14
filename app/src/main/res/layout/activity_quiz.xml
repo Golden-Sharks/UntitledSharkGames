@@ -49,6 +49,8 @@
                     android:layout_height="50pt"
                     android:backgroundTint="@color/persoDarkBlue"
                     android:textColor="@color/persoWhite"
+                    app:strokeWidth="0dp"
+                    app:strokeColor="@color/white"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_2"
@@ -56,6 +58,8 @@
                     android:layout_height="50pt"
                     android:backgroundTint="@color/persoDarkBlue"
                     android:textColor="@color/persoWhite"
+                    app:strokeWidth="0dp"
+                    app:strokeColor="@color/white"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_3"
@@ -63,6 +67,8 @@
                     android:layout_height="50pt"
                     android:backgroundTint="@color/persoDarkBlue"
                     android:textColor="@color/persoWhite"
+                    app:strokeWidth="0dp"
+                    app:strokeColor="@color/white"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_4"
@@ -70,6 +76,8 @@
                     android:layout_height="50pt"
                     android:backgroundTint="@color/persoDarkBlue"
                     android:textColor="@color/persoWhite"
+                    app:strokeWidth="0dp"
+                    app:strokeColor="@color/white"
                     android:text="@string/placeHolder"/>
         </LinearLayout>
         <ProgressBar
