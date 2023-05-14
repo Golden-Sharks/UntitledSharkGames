@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import esir.progm.untitledsharkgames.PopUp;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ManageFiles;
@@ -52,6 +51,14 @@ public class QuizTrainingTheme extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchWithTheme("pokemon");
+            }
+        });
+
+        Button progm = findViewById(R.id.progm);
+        progm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchWithTheme("progm");
             }
         });
     }

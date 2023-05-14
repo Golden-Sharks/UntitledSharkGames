@@ -1,0 +1,8 @@
+Combien d'UI une activité peut contenir?,1,2,3,un nombre indéterminé
+Qu'est-ce qui n'est pas une View en Android?,Menu,Button,EditText,Relative Layout
+Quel est le framework de test pour Android?,Espresso,Capuccino,Macchiato,Americano
+Qu'est-ce qui ne nécessite pas d'autorisarion?,Créer des fichiers sur le stockage interne,Utiliser une base de données en ligne (type Firebase),Utiliser le stockage externe,Récupérer des données du capteur cardiaque à une fréquence de 199 Hz
+Quel est l'avantage principal de Kotlin par rapport à Java?,Kotlin permet d'éviter les exceptions liées à la nullité,Kotlin est plus orienté objet que Java,Kotlin est plus facile à apprendre que Java,Kotlin est plus rapide que Java
+Pourquoi flutter est-il intéressant?,Pour développer à la fois sur Android et IOS,Il permet d'ignorer les permissions,Grâce à la null safety mécanique,La syntax est plus concise
+Quel langage est principalement utilisé pour développer exclusivement sur Android?,Java,Dart,C++,Python
+Quelle entreprise est propriétaire d'Android?,Google,Huawei,JetBrains,Apple
