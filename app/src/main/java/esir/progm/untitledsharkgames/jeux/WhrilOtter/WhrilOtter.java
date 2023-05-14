@@ -96,6 +96,9 @@ public class WhrilOtter extends AppCompatActivity {
         }
     }
 
+    /**********************************************************************************************/
+    /*                                         Async task                                         */
+    /**********************************************************************************************/
     private class WhrilOtterTask extends AsyncTask<Void, Double, Integer> {
         /*                    Final atributes                    */
         private final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE,

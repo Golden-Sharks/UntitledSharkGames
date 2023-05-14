@@ -48,7 +48,7 @@
                 android:textColor="@color/persoWhite"
                 android:textSize="30dp"
                 android:fontFamily="@font/dancing_script_regular"
-                android:text="Nombre de jeux :"
+                android:text="Number of games :"
                 android:layout_marginBottom="15dp"/>
 
             <LinearLayout
