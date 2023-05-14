@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import esir.progm.untitledsharkgames.interfaces.Game;
+import esir.progm.untitledsharkgames.multiplayer.Multijoueur;
 import esir.progm.untitledsharkgames.multiplayer.MultiClient;
 import esir.progm.untitledsharkgames.multiplayer.MultiHeberger;
 
@@ -20,18 +20,8 @@ public class Server {
     ServerSocket serverSocket;
     static final int socketServerPORT = 8080;
 
-    public Server(Game dispMsg) {
-        Thread socketServerThread = new Thread(new SocketServerThread(dispMsg));
-        socketServerThread.start();
-    }
-
-    public Server(MultiHeberger mh) {
-        Thread socketServerThread = new Thread(new SocketServerThread(mh));
-        socketServerThread.start();
-    }
-
-    public Server(MultiClient mc) {
-        Thread socketServerThread = new Thread(new SocketServerThread(mc));
+    public Server(Multijoueur multi) {
+        Thread socketServerThread = new Thread(new SocketServerThread(multi));
         socketServerThread.start();
     }
 
@@ -48,24 +38,14 @@ public class Server {
         }
     }
     private class SocketServerThread extends Thread {
-        private Game dispMsg;
+        private Multijoueur multi;
         private MultiHeberger mh;
         private MultiClient mc;
         private boolean init;
 
-        public SocketServerThread(Game dispMsg) {
-            this.dispMsg = dispMsg;
+        public SocketServerThread(Multijoueur multi) {
+            this.multi = multi;
             this.init = false;
-        }
-
-        public SocketServerThread(MultiHeberger mh) {
-            this.mh = mh;
-            this.init = true;
-        }
-
-        public SocketServerThread(MultiClient mc) {
-            this.mc = mc;
-            this.init = true;
         }
 
         @Override
@@ -77,75 +57,34 @@ public class Server {
                     // block the call until connection is created and return
                     // Socket object
                     Socket socket = serverSocket.accept();
-
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
                     byte[] buffer = new byte[1024];
                     int bytesRead;
                     InputStream inputStream = socket.getInputStream();
-                    String message = "";
+                    StringBuilder message = new StringBuilder();
                     /*
                      * notice: inputStream.read() will block if no data return
                      */
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         byteArrayOutputStream.write(buffer, 0, bytesRead);
-                        message += byteArrayOutputStream.toString("UTF-8");
+                        message.append(byteArrayOutputStream.toString("UTF-8"));
                     }
-
-                    if (init) { // On veut récupérer le pseudo et l'IP
-                        if (mh!=null) {
-
-                            String finalMessage = message;
-                            this.mh.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String ip = parseIP(socket.getInetAddress().toString());
-                                    mh.addDevice(finalMessage, ip);
-                                }
-                            });
-                        }
-                        else {
-                            this.mc.runOnUiThread(new Runnable(){
-                                @Override
-                                public void run() {
-                                   mc.launchGames();
-                                }
-                            });
-                        }
-                    } else {
-                        String msg = "Score de l'adversaire : "+message;
-                        this.dispMsg.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dispMsg.setMsg(msg);
-                            }
-                        });
+                    if (message.charAt(0)=='/') {
+                        message.append("/" + socket.getInetAddress().getHostAddress());
                     }
+                    String finalMessage = message.toString();
+                    multi.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            multi.setMsg(finalMessage);
+                        }
+                    });
                 }
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("AAAAA : server is stopped (it shouldn't)");
             }
         }
-    }
-
-    private String parseIP(String ip) {
-        StringBuilder cleanIP = new StringBuilder();
-        int nbInNumberBlock = 0;
-        int nbOfPoints = 0;
-        for (int i=0 ; i<ip.length() ; i++){
-            char c = ip.charAt(i);
-            if (c=='.') {
-                nbInNumberBlock = 0;
-                nbOfPoints++;
-                if (nbOfPoints>3) break;
-                cleanIP.append(c);
-            } else if(c<='9' && c>='0') {
-                nbInNumberBlock++;
-                if (nbInNumberBlock>3) break;
-                cleanIP.append(c);
-            }
-        }
-        return cleanIP.toString();
     }
 
     public String getIpAddress() {

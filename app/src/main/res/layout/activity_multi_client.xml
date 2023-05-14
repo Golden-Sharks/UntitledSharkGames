@@ -9,8 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:id="@+id/init">
         <ImageButton
             android:id="@+id/exit"
             android:layout_width="20dp"
@@ -22,13 +22,11 @@
             android:layout_marginBottom="5pt"
             android:background="@null"
             android:src="@drawable/exit_image_white"/>
-
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-
             <EditText
                 android:id="@+id/addressEditText"
                 android:layout_width="match_parent"
@@ -36,23 +34,58 @@
                 android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:hint="Entrez le code de l'hébergeur" />
-
             <Button
                 android:id="@+id/connectButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Connection" />
-
             <TextView
                 android:id="@+id/infos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text=""/>
-
         </LinearLayout>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="50dp"
+        android:id="@+id/scoreBoard">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/J1_pseudo"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/red"
+                android:id="@+id/J1_score"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/red"
+                android:id="@+id/J2_score"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/J2_pseudo"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/home"
+                android:visibility="gone"
+                android:text="HOME"
+                android:layout_gravity="center"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

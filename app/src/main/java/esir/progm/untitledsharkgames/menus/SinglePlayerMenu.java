@@ -102,7 +102,10 @@ public class SinglePlayerMenu extends AppCompatActivity {
         score_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScoreDB.getInstance(is, os).addOnLeaderboard(username_feild.getText().toString(), score);
+                String username = username_feild.getText().toString();
+                if (isPseudoValid(username)) {
+                    ScoreDB.getInstance(is, os).addOnLeaderboard(username, score);
+                }
                 finish();
             }
         });
@@ -158,6 +161,26 @@ public class SinglePlayerMenu extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean isPseudoValid(String username) {
+        TextView error = findViewById(R.id.errorForLeaderboard);
+        if (username.length()==0) {
+            error.setText("Renseignez un pseudonyme");
+            return false;
+        }
+        for (int i=0 ; i<username.length() ; i++){
+            if (i==25) {
+                error.setText("Le pseudo est trop long\n(il doit faire moins de 25 caractères)");
+                return false;
+            }
+            char c = username.charAt(i);
+            if (c==' ') {
+                error.setText("Le pseudo ne doit pas contenir d'espaces");
+                return false;
+            }
+        }
+        return true;
     }
 
     private List<Class> createGameList() {

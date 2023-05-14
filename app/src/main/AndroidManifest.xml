@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -16,9 +15,6 @@
         tools:targetApi="31">
         <activity
             android:name=".jeux.WhrilOtter.WhrilOtter"
-            android:exported="false" />
-        <activity
-            android:name=".jeux.Cliquer"
             android:exported="false" />
         <activity
             android:name=".multiplayer.MultiClient"
@@ -49,7 +45,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
