@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".jeux.WhrilOtter.WhrilOtter"
-    android:background="@color/persoLightBlue">
+    android:background="@drawable/whirl_otter_background">
 
     <RelativeLayout
         android:layout_width="match_parent"

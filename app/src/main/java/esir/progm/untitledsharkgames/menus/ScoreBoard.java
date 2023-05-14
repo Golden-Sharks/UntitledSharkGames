@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.shape.ShapePath;
 
@@ -72,12 +75,34 @@ public class ScoreBoard extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter_users = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                users);
+                users){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView= view.findViewById(android.R.id.text1);
+                textView.setTextColor(getResources().getColor(R.color.persoWhite));
+
+                return view;
+            }
+        };
 
         ArrayAdapter<String> arrayAdapter_scores = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                scores);
+                scores){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView= view.findViewById(android.R.id.text1);
+                textView.setTextColor(getResources().getColor(R.color.persoWhite));
+
+                return view;
+            }
+        };
 
         lv_users.setAdapter(arrayAdapter_users);
         lv_users.setDivider(null);

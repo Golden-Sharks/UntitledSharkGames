@@ -20,7 +20,7 @@
             android:text="@string/training_title"
             android:textSize="50dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/persoWhite"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="50dp"/>
 
@@ -50,7 +50,7 @@
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/sharkslap"
@@ -61,7 +61,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
 
             <Button
@@ -72,7 +72,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
         </LinearLayout>
 

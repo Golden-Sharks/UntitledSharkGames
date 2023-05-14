@@ -4,13 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".jeux.quiz.QuizActivity">
+    tools:context=".jeux.quiz.QuizActivity"
+    android:background="@drawable/quizz_background">
 
     <TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/persoWhite"
         android:text="Score : 10000"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         />
 
     <LinearLayout
@@ -24,7 +31,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text = "@string/placeHolder"
-            android:background="@color/persoDarkBlue"
+            android:background="@drawable/quizz_round_corners"
+            android:backgroundTint="@color/persoDarkBlue"
             android:textColor="@color/persoWhite"
             android:layout_marginTop="100dp"
             android:layout_marginRight="15dp"
@@ -47,29 +55,33 @@
                     android:id="@+id/rep_1"
                     android:layout_width="match_parent"
                     android:layout_height="50pt"
-                    android:backgroundTint="@color/persoDarkBlue"
-                    android:textColor="@color/persoWhite"
+                    android:backgroundTint="@color/persoWhite"
+                    android:textColor="@color/persoBlack"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_2"
                     android:layout_width="match_parent"
                     android:layout_height="50pt"
-                    android:backgroundTint="@color/persoDarkBlue"
-                    android:textColor="@color/persoWhite"
+                    android:backgroundTint="@color/persoWhite"
+                    android:textColor="@color/persoBlack"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_3"
                     android:layout_width="match_parent"
                     android:layout_height="50pt"
-                    android:backgroundTint="@color/persoDarkBlue"
-                    android:textColor="@color/persoWhite"
+                    android:backgroundTint="@color/persoWhite"
+                    android:textColor="@color/persoBlack"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/placeHolder"/>
                 <Button
                     android:id="@+id/rep_4"
                     android:layout_width="match_parent"
                     android:layout_height="50pt"
-                    android:backgroundTint="@color/persoDarkBlue"
-                    android:textColor="@color/persoWhite"
+                    android:backgroundTint="@color/persoWhite"
+                    android:textColor="@color/persoBlack"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/placeHolder"/>
         </LinearLayout>
         <ProgressBar
@@ -81,7 +93,9 @@
             android:layout_marginLeft="5pt"
             android:layout_marginRight="5pt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/persoLightBlue"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

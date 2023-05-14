@@ -21,7 +21,7 @@
             android:text="@string/main_menu_title"
             android:textSize="40dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/persoWhite"
             android:layout_marginTop="175dp"
             android:layout_marginBottom="50dp"/>
 
@@ -42,7 +42,7 @@
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/single"
@@ -53,7 +53,7 @@
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/training"
@@ -64,7 +64,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
             android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/scores"
@@ -74,7 +74,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
         </LinearLayout>
 

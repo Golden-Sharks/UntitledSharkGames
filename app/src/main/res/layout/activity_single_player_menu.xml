@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menus.SinglePlayerMenu"
-    android:background="@color/persoGreen">
+    android:background="@drawable/single_player_background">
 
     <RelativeLayout
         android:id="@+id/items"
@@ -99,7 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/options"
-            android:src="@drawable/otter"/>
+            android:src="@drawable/otter"
+            android:layout_marginHorizontal="40dp"/>
     </RelativeLayout>
 
 

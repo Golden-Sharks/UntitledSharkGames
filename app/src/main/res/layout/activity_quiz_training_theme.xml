@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_menu_background"
+    android:background="@drawable/score_background"
     tools:context=".menus.QuizTrainingTheme">
 
     <RelativeLayout
@@ -18,9 +18,9 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/dancing_script_regular"
             android:text="@string/chose_theme"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/persoWhite"
             android:layout_marginTop="175dp"
             android:layout_marginBottom="50dp"/>
 
@@ -50,7 +50,7 @@
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/pokemon"
@@ -61,7 +61,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
                 android:id="@+id/progm"
@@ -71,7 +71,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
         </LinearLayout>
 
