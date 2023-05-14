@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -18,16 +22,15 @@ import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ManageFiles;
 
 public class QuizActivity extends AppCompatActivity {
-    /*                    hide UI parameters                    */
+
+    private final int DURATION = 6000;
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
     private boolean isOnBackground = false;
-
     private boolean isRight;
     private QuizQuestion qq;
 
@@ -45,14 +48,12 @@ public class QuizActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_quiz);
-
         View decor = getWindow().getDecorView();
         decor.setOnSystemUiVisibilityChangeListener(visibility -> {
             if(visibility==0) {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
-
 
         this.intent = getIntent();
         Bundle b = this.intent.getExtras();
@@ -76,8 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
         pb.setProgress(100);
-        int nbMilliSec = 10000;
-        this.mCountDownTimer = new CountDownTimer(nbMilliSec,100) {
+        this.mCountDownTimer = new CountDownTimer(DURATION,DURATION/100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current = pb.getProgress();
@@ -113,7 +113,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRight = qq.isRightAnswer(1);
-                endRound();
+                changeRectangleColor(1);
             }
         });
 
@@ -123,7 +123,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRight = qq.isRightAnswer(2);
-                endRound();
+                changeRectangleColor(2);
             }
         });
 
@@ -133,7 +133,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRight = qq.isRightAnswer(3);
-                endRound();
+                changeRectangleColor(3);
             }
         });
 
@@ -143,17 +143,28 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRight = qq.isRightAnswer(4);
-                endRound();
+                changeRectangleColor(4);
             }
         });
+        changeRectangleColor(0);
+    }
+
+    private void changeRectangleColor(int indice) {
+        Button[] reponses = {findViewById(R.id.rep_1),findViewById(R.id.rep_2),findViewById(R.id.rep_3),findViewById(R.id.rep_4)};
+        for (int i=1 ; i<5 ; i++) {
+            Button current = reponses[i-1];
+            if (i==indice) {
+                current.setBackgroundColor(getResources().getColor(R.color.persoLightBlue));
+            } else {
+                current.setBackgroundColor(getResources().getColor(R.color.persoDarkBlue));
+            }
+        }
+
     }
 
     private void endRound() {
         if (isRight) {
-            ProgressBar pb = findViewById(R.id.progressbar);
-            this.score += pb.getProgress();                                 //TODO calcul des scores
-        } else {
-            System.out.println("T une merde en fait?");
+            this.score += 100;
         }
         boolean isEnd = qq.setUpNewQuestion();
         if (!isEnd) {
@@ -179,7 +190,6 @@ public class QuizActivity extends AppCompatActivity {
         setTextView(questionStrings[0]);
         setButtons(questionStrings);
     }
-
 
     @Override
     protected void onPause() {

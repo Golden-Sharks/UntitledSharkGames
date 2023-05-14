@@ -12,8 +12,10 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class MultiHeberger extends Multijoueur {
@@ -64,7 +66,7 @@ public class MultiHeberger extends Multijoueur {
                 String adress = nameToAdress.get(name);
                 Communication.setIpHost(adress);
                 createGameList();
-                launchGames();
+                launchGames(0);
             }
         });
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
@@ -79,30 +81,15 @@ public class MultiHeberger extends Multijoueur {
         listDevices.notifyDataSetChanged();
     }
 
-
-
-
-    private void /*List<Class>*/ createGameList() {
-        /*List<Class> games = new ArrayList<>();
-        // Choix aléatoire : 1 jeu tiré au sort par catégorie
-        for(int i=0; i<3; i++) {
-            int low = 1;
-            int high = 3;
-            int result = new Random().nextInt(high-low) + low;
-
-            if(result == 1) {
-                games.add(SharkSlap.class);
-            } else if (result == 2) {
-                games.add(QuizActivity.class);
-            }
-        }
-        return games;*/
+    private void createGameList() {
         games = new LinkedList<>();
-        this.tirageAuSort = new int[3];
-        this.tirageAuSort[0] = 1;
-        this.tirageAuSort[1] = 2;
-        this.tirageAuSort[2] = 3;
-        games.add(SharkSlap.class);
+        Random rd = new Random();
+        this.tirageAuSort[0] = rd.nextInt(POUL[0].length);
+        this.tirageAuSort[1] = rd.nextInt(POUL[1].length);
+        this.tirageAuSort[2] = rd.nextInt(3);
+        games.add(POUL[0][tirageAuSort[0]]);
+        games.add(POUL[1][tirageAuSort[1]]);
+        games.add(QuizActivity.class);
         String message = "["+tirageAuSort[0]+","+tirageAuSort[1]+","+tirageAuSort[2];
         Communication.sendMessage(message);
     }

@@ -12,11 +12,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class MultiClient extends Multijoueur {
     private TextView info;
-    public ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +66,12 @@ public class MultiClient extends Multijoueur {
         return finalIP.toString();
     }
 
-    private void createGameList(int jeu1, int jeu2, int jeu3) {
+    private void createGameList() {
         this.games = new ArrayList<>();
-        games.add(SharkSlap.class);
-        launchGames();
+        games.add(POUL[0][tirageAuSort[0]]);
+        games.add(POUL[1][tirageAuSort[1]]);
+        games.add(QuizActivity.class);
+        launchGames(0);
     }
 
     @Override
@@ -80,8 +82,10 @@ public class MultiClient extends Multijoueur {
             if (c == '[') {
                 // launch infos : suite de int
                 this.relevant = restOfMsg.split(",");
-                createGameList(Integer.parseInt(relevant[0]),
-                        Integer.parseInt(relevant[1]), Integer.parseInt(relevant[2]));
+                tirageAuSort[0] = Integer.parseInt(relevant[0]);
+                tirageAuSort[1] = Integer.parseInt(relevant[1]);
+                tirageAuSort[2] = Integer.parseInt(relevant[2]);
+                createGameList();
             } else if (c == '_') {
                 // Pseudo + score
                 this.relevant = restOfMsg.split("_");
