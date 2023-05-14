@@ -64,10 +64,10 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/dancing_script_regular"/>
             <Button
-                android:id="@+id/jeu2"
+                android:id="@+id/sharkWind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="insert game here"
+                android:text="Shark wind"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:textColor="@color/black"

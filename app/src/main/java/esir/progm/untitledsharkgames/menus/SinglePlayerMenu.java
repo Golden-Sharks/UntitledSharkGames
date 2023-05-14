@@ -126,7 +126,15 @@ public class SinglePlayerMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 games = createGameList();
-                activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
+                if(games.get(0) == QuizActivity.class) {
+                    Intent intent = new Intent(SinglePlayerMenu.this, games.get(0));
+                    String[] themes = {"starwars", "pokemon"};
+                    int index = new Random().nextInt(themes.length);
+                    intent.putExtra("theme", themes[index]);
+                    activityResultLauncher.launch(intent);
+                } else {
+                    activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
+                }
             }
         });
 
@@ -171,7 +179,15 @@ public class SinglePlayerMenu extends AppCompatActivity {
     }
 
     private void playGame(int game) {
-        activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(game)));
+        if(games.get(0) == QuizActivity.class) {
+            Intent intent = new Intent(SinglePlayerMenu.this, games.get(game));
+            String[] themes = {"starwars", "pokemon"};
+            int index = new Random().nextInt(themes.length);
+            intent.putExtra("theme", themes[index]);
+            activityResultLauncher.launch(intent);
+        } else {
+            activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(game)));
+        }
     }
 
     private void end() {
