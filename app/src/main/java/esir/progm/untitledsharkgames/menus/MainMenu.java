@@ -15,7 +15,7 @@ import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.multiplayer.MultiPlayerChose;
 
 public class MainMenu extends AppCompatActivity {
-
+    /*                    hide UI parameters                    */
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -24,59 +24,42 @@ public class MainMenu extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
     private boolean isOnBackground = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Init activity and disable UI
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main_menu);
 
-
         View decor = getWindow().getDecorView();
-        decor.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if(visibility==0) {
-                    decor.setSystemUiVisibility(hideSystemBars);
-                }
+        decor.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if(visibility==0) {
+                decor.setSystemUiVisibility(hideSystemBars);
             }
         });
 
+        // Get layout elements
         Button singlePlayer = findViewById(R.id.single);
         Button multiplayer = findViewById(R.id.multi);
         Button trainingMode = findViewById(R.id.training);
         Button scoresBoard = findViewById(R.id.scores);
 
-        singlePlayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, SinglePlayerMenu.class));
-            }
+        // Set clieck event
+        singlePlayer.setOnClickListener(view -> startActivity(new Intent(MainMenu.this, SinglePlayerMenu.class)));
+
+        multiplayer.setOnClickListener(view -> startActivity(new Intent(MainMenu.this, MultiPlayerChose.class)));
+
+        trainingMode.setOnClickListener(view -> startActivity(new Intent(MainMenu.this, Training.class)));
+
+        scoresBoard.setOnClickListener(view -> {
+            System.out.println("clicked");
+            startActivity(new Intent(MainMenu.this, ScoreBoard.class));
         });
 
-        multiplayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, MultiPlayerChose.class));
-            }
-        });
-
-        trainingMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainMenu.this, Training.class));
-            }
-        });
-
-        scoresBoard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("clicked");
-                startActivity(new Intent(MainMenu.this, ScoreBoard.class));
-            }
-        });
-
+        // Play music
         MusicPlayer.getInstance().play(this.getApplicationContext(), R.raw.main_menu, true);
     }
 

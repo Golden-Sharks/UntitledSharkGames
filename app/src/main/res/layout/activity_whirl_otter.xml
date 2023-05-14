@@ -4,26 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".jeux.sharkWind.SharkWind"
-    android:backgroundTint="@color/persoLightBlue">
+    tools:context=".jeux.WhrilOtter.WhrilOtter"
+    android:background="@color/persoLightBlue">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <TextView
+            android:id="@+id/wind_score_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/persoWhite"
+            android:gravity="center"
+            android:layout_marginVertical="10dp"
+            android:textSize="50dp"
+            android:fontFamily="@font/dancing_script_regular"
+            android:text="Blow !!"/>
         <TextView
             android:id="@+id/wind_score_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/persoWhite"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_below="@id/wind_score_title"
+            android:text="0"/>
 
         <ImageView
             android:id="@+id/otter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/wind_score_text"
-            android:src="@drawable/otter"/>
+            android:src="@drawable/otter"
+            android:layout_marginHorizontal="25dp"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

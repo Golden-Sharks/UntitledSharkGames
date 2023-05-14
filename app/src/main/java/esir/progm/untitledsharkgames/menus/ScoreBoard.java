@@ -30,6 +30,7 @@ import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ScoreDB;
 
 public class ScoreBoard extends AppCompatActivity {
+    /*                    hide UI parameters                    */
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -37,11 +38,13 @@ public class ScoreBoard extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
+    /*                    activity parameters                   */
     private InputStream is;
     private FileOutputStream os;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Init activity and disable UI
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -49,21 +52,23 @@ public class ScoreBoard extends AppCompatActivity {
         setContentView(R.layout.activity_score_board);
 
         View decor = getWindow().getDecorView();
-        decor.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if(visibility==0) {
-                    decor.setSystemUiVisibility(hideSystemBars);
-                }
+        decor.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if(visibility==0) {
+                decor.setSystemUiVisibility(hideSystemBars);
             }
         });
 
-        HashMap<String, ArrayList<String>> map = loadScores(this.getApplicationContext());
+        // Init score map
+        HashMap<String, ArrayList<String>> map = loadScores();
         ArrayList<String> users = map.get("users");
         ArrayList<String> scores = map.get("scores");
 
+        // Get layout elements
         ListView lv_users = findViewById(R.id.list_names);
         ListView lv_scores = findViewById(R.id.list_scores);
+        ImageButton exit = findViewById(R.id.exit);
+
+        // Add ArrayAdapter with scores lists
         ArrayAdapter<String> arrayAdapter_users = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -80,13 +85,8 @@ public class ScoreBoard extends AppCompatActivity {
         lv_scores.setDivider(null);
         arrayAdapter_scores.notifyDataSetChanged();
 
-        ImageButton exit = findViewById(R.id.exit);
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        // Set event listener for exit button
+        exit.setOnClickListener(view -> finish());
     }
 
     @Override
@@ -98,7 +98,11 @@ public class ScoreBoard extends AppCompatActivity {
         }
     }
 
-    private HashMap<String, ArrayList<String>> loadScores(Context context){
+    /**
+     * load scores from internal storage
+     * @return Map with the lists of usernames and scores
+     */
+    private HashMap<String, ArrayList<String>> loadScores(){
         ArrayList<String> users = new ArrayList<>();
         ArrayList<String> scores = new ArrayList<>();
 

@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
-import esir.progm.untitledsharkgames.jeux.sharkWind.SharkWind;
+import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 
 public class Training extends AppCompatActivity {
 
@@ -75,7 +75,7 @@ public class Training extends AppCompatActivity {
         sharkWind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Training.this, SharkWind.class));
+                startActivity(new Intent(Training.this, WhrilOtter.class));
             }
         });
     }
