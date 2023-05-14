@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -138,6 +139,9 @@ public class SinglePlayerMenu extends AppCompatActivity {
                 activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
             }
         });
+
+        ImageButton exit = findViewById(R.id.singleplayer_exit);
+        exit.setOnClickListener(view -> finish());
 
         // Set activity launcher
         activityResultLauncher = registerForActivityResult(
