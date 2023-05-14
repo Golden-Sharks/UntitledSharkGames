@@ -1,7 +1,5 @@
 package esir.progm.untitledsharkgames.multiplayer;
 
-import android.widget.TextView;
-
 import esir.progm.untitledsharkgames.Communication.Client;
 
 public class Communication {
