@@ -23,13 +23,13 @@ import esir.progm.untitledsharkgames.ManageFiles;
 
 public class QuizActivity extends AppCompatActivity {
 
+    private final int DURATION = 6000;
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-
     private boolean isOnBackground = false;
     private boolean isRight;
     private QuizQuestion qq;
@@ -77,8 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     private void setProgressBar() {
         ProgressBar pb = findViewById(R.id.progressbar);
         pb.setProgress(100);
-        int nbMilliSec = 10000;
-        this.mCountDownTimer = new CountDownTimer(nbMilliSec,100) {
+        this.mCountDownTimer = new CountDownTimer(DURATION,100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current = pb.getProgress();
