@@ -28,12 +28,12 @@ import java.util.Random;
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ScoreDB;
+import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
 public class SinglePlayerMenu extends AppCompatActivity {
-
-
+    /*                    hide UI parameters                    */
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -42,25 +42,25 @@ public class SinglePlayerMenu extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     private boolean isOnBackground = false;
 
-    private int nb_games;
-    public ActivityResultLauncher<Intent> activityResultLauncher;
-    private List<Class> games;
+    /*                    activity parameters                   */
     private final int MAX_GAMES_NUMBER = 99;
+    private int score;
+    private int nb_games;
+    private List<Class> games;
     private RelativeLayout items;
     private RelativeLayout finish_screen;
     private LinearLayout score_save;
     private Button score_submit;
     private EditText username_feild;
     private TextView final_score;
-
-    private int score;
+    public ActivityResultLauncher<Intent> activityResultLauncher;
     private int nb_results;
-
     FileOutputStream os;
     InputStream is;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Init activity and disable UI
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -77,11 +77,21 @@ public class SinglePlayerMenu extends AppCompatActivity {
                 }
             }
         });
+
+        // Init attributes
         nb_games = 1;
         score = 0;
         games = createGameList();
         nb_results = 0;
 
+        is = getApplicationContext().getResources().openRawResource(R.raw.scores);
+        try {
+            os = getApplicationContext().openFileOutput("scores.txt", Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            System.out.println("Ficher scores plus là !");
+        }
+
+        // Get layout elements
         TextView up = findViewById(R.id.up_games);
         TextView down = findViewById(R.id.down_games);
         TextView nb_game_text = findViewById(R.id.nb_games);
@@ -92,22 +102,13 @@ public class SinglePlayerMenu extends AppCompatActivity {
         username_feild = findViewById(R.id.username_text);
         final_score = findViewById(R.id.score);;
 
-        is = getApplicationContext().getResources().openRawResource(R.raw.scores);
-        try {
-            os = getApplicationContext().openFileOutput("scores.txt", Context.MODE_PRIVATE);
-        } catch (Exception e) {
-            System.out.println("Ficher scores plus là !");
-        }
-
-        score_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = username_feild.getText().toString();
-                if (isPseudoValid(username)) {
-                    ScoreDB.getInstance(is, os).addOnLeaderboard(username, score);
-                }
-                finish();
+        // Set event listeners
+        score_submit.setOnClickListener(view -> {
+            String username = username_feild.getText().toString();
+            if (isPseudoValid(username)) {
+                ScoreDB.getInstance(is, os).addOnLeaderboard(username, score);
             }
+            finish();
         });
 
         up.setOnClickListener(view -> {
@@ -125,44 +126,44 @@ public class SinglePlayerMenu extends AppCompatActivity {
         });
 
         Button start = findViewById(R.id.start_singlePlayer);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                games = createGameList();
-                if(games.get(0) == QuizActivity.class) {
-                    Intent intent = new Intent(SinglePlayerMenu.this, games.get(0));
-                    String[] themes = {"starwars", "pokemon"};
-                    int index = new Random().nextInt(themes.length);
-                    intent.putExtra("theme", themes[index]);
-                    activityResultLauncher.launch(intent);
-                } else {
-                    activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
-                }
+        start.setOnClickListener(view -> {
+            games = createGameList();
+            if(games.get(0) == QuizActivity.class) {
+                Intent intent = new Intent(SinglePlayerMenu.this, games.get(0));
+                String[] themes = {"starwars", "pokemon"};
+                int index = new Random().nextInt(themes.length);
+                intent.putExtra("theme", themes[index]);
+                activityResultLauncher.launch(intent);
+            } else {
+                activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
             }
         });
 
+        // Set activity launcher
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult activityResult) {
-                        if(activityResult.getResultCode() == 78) {
-                            Intent intent = activityResult.getData();
+                activityResult -> {
+                    if(activityResult.getResultCode() == 78) {
+                        Intent intent = activityResult.getData();
 
-                            if(intent != null) {
-                                score += intent.getIntExtra("score", 0);
-                            }
-                            nb_results++;
-                            if(nb_results==nb_games) {
-                                end();
-                            } else {
-                                playGame(nb_results);
-                            }
+                        if(intent != null) {
+                            score += intent.getIntExtra("score", 0);
+                        }
+                        nb_results++;
+                        if(nb_results==nb_games) {
+                            end();
+                        } else {
+                            playGame(nb_results);
                         }
                     }
                 });
     }
 
+    /**
+     * Check if selected pseudonym is valid
+     * @param username -> string
+     * @return boolean : True if username is a valid pseudonym, False otherwise
+     */
     private boolean isPseudoValid(String username) {
         TextView error = findViewById(R.id.errorForLeaderboard);
         if (username.length()==0) {
@@ -183,25 +184,40 @@ public class SinglePlayerMenu extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Create a game list
+     * @return list of Class, size=nb_games
+     */
     private List<Class> createGameList() {
+        // Create empty list
         List<Class> games = new ArrayList<>();
 
+        // Loop for games number
         for(int i=0; i<nb_games; i++) {
+            // Generate a number between 1 and number of available games
             int low = 1;
-            int high = 3;
+            int high = 4;
             int result = new Random().nextInt(high-low) + low;
 
+            // Match random number to a game
             if(result == 1) {
                 games.add(SharkSlap.class);
             } else if (result == 2) {
                 games.add(QuizActivity.class);
+            } else if (result == 4) {
+                games.add(WhrilOtter.class);
             }
         }
 
         return games;
     }
 
+    /**
+     * Launch a single player game
+     * @param game -> Class refers to the game to launch
+     */
     private void playGame(int game) {
+        // If first game is a quizz, randomly choose the theme, otherwise launch game directly
         if(games.get(0) == QuizActivity.class) {
             Intent intent = new Intent(SinglePlayerMenu.this, games.get(game));
             String[] themes = {"starwars", "pokemon"};
@@ -213,6 +229,9 @@ public class SinglePlayerMenu extends AppCompatActivity {
         }
     }
 
+    /**
+     * Change UI at the end of a game loop
+     */
     private void end() {
         items.setVisibility(View.GONE);
         final_score.setText(score + "pts");
