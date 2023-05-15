@@ -44,6 +44,11 @@ public class MultiClient extends Multijoueur {
         });
     }
 
+    /**
+     * Parse le code renseigné par l'utilisateur pour en extraire
+     * l'adresse IP de l'hébergeur de la partie
+     * (les deux doivent être sur le même réseau)
+     */
     private String getIpFromCode(String code) {
         String IP = server.getIpAddress();
         StringBuilder finalIP = new StringBuilder(20);
@@ -61,6 +66,9 @@ public class MultiClient extends Multijoueur {
         return finalIP.toString();
     }
 
+    /**
+     * Créé la liste des jeux à partir des tirages au sort de l'hébergeur
+     */
     private void createGameList() {
         this.games = new ArrayList<>();
         games.add(POUL[0][tirageAuSort[0]]);
@@ -69,23 +77,27 @@ public class MultiClient extends Multijoueur {
         launchGames(0);
     }
 
+    /**
+     * Interprète le message envoyé par l'hébergeur
+     */
     @Override
     public void setMsg(String message) {
         if (message.length()>=2) {
             char c = message.charAt(0);
             String restOfMsg = message.substring(1);
             if (c == '[') {
-                // launch infos : suite de int
+                // launch infos : suite de int indiquant le résultat du tirage au sort
                 this.relevant = restOfMsg.split(",");
                 tirageAuSort[0] = Integer.parseInt(relevant[0]);
                 tirageAuSort[1] = Integer.parseInt(relevant[1]);
                 tirageAuSort[2] = Integer.parseInt(relevant[2]);
                 createGameList();
             } else if (c == '_') {
-                // Pseudo + score
+                // Pseudo + score de l'hébergeur
                 this.relevant = restOfMsg.split("_");
                 drawAdversaryUiScores(relevant[0], Integer.parseInt(relevant[1]));
             } else if (c=='F') {
+                // Signal indiquant le lancement du prochain jeu
                 launchGames(nb_results);
             }
         }

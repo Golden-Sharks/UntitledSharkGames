@@ -76,11 +76,16 @@ public class MultiHeberger extends Multijoueur {
     }
 
     public void addDevice(String name, String adress) {
-        listOfNames.add(name);
-        nameToAdress.put(name, adress);
-        listDevices.notifyDataSetChanged();
+        if (!listOfNames.contains(name)) {
+            listOfNames.add(name);
+            nameToAdress.put(name, adress);
+            listDevices.notifyDataSetChanged();
+        }
     }
 
+    /**
+     * Créé la liste des jeux par tirage au sort (un tirage par catégorie)
+     */
     private void createGameList() {
         games = new LinkedList<>();
         Random rd = new Random();
@@ -94,6 +99,9 @@ public class MultiHeberger extends Multijoueur {
         Communication.sendMessage(message);
     }
 
+    /**
+     * Détermine le code de l'hébergeur à partir de l'IP
+     */
     private String getCode() {
         String IP = server.getIpAddress();
         StringBuilder code = new StringBuilder(20);
@@ -110,12 +118,15 @@ public class MultiHeberger extends Multijoueur {
         return code.toString();
     }
 
+    /**
+     * Interpète les messages du deuxième joueur
+     */
     @Override
     public void setMsg(String message) {
         char c = message.charAt(0);
         String restOfMsg = message.substring(1);
         if (c == '/') {
-            // IP + pseudo
+            // IP + pseudo : permet d'ajouter un nouveau joueur à la liste
             this.relevant = restOfMsg.split("/");
             String pseudo = relevant[0];
             String ip = relevant[1];
@@ -127,6 +138,9 @@ public class MultiHeberger extends Multijoueur {
         }
     }
 
+    /**
+     * Appelée à chaque fin de jeu
+     */
     protected void onGameResult(ActivityResult activityResult) {
         super.onGameResult(activityResult);
         if (nb_results!=3) {
