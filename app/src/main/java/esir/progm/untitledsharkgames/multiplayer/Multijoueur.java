@@ -29,6 +29,7 @@ import esir.progm.untitledsharkgames.ScoreDB;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 import esir.progm.untitledsharkgames.jeux.feedTheShark.FeedTheShark;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
+import esir.progm.untitledsharkgames.jeux.spinTheShark.SpinTheShark;
 
 /**
  * Classe abstraite gérant les comportements communs au client et à l'hébergeur
@@ -49,7 +50,7 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected Server server;
     protected List<Class> games;
     protected int nb_results = 0;
-    protected final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SharkSlap.class}}; // Différents jeux qu'il est possible de lancer
+    protected final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SpinTheShark.class, SharkSlap.class}}; // Différents jeux qu'il est possible de lancer
     protected int[] tirageAuSort = new int[3];
     public abstract void setMsg(String message);
 

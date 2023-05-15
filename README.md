@@ -6,6 +6,7 @@ A compilation of mini-games developed by the Golden Shark studio.
 - SharkSlap (a mole-tapping game with sharks)
 - WhirlOtter (blow into the microphone to make the otter do as many tricks as possible)
 - feedTheShark (drag a fish into the shark's mouth with the gyroscope).
+- Spin the Shark (Use your finger to... well, spin the shark)
 
 You can start a single player game or a multiplayer game (2 players).
 

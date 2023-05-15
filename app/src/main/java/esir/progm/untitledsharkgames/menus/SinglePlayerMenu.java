@@ -30,8 +30,10 @@ import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.ScoreDB;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
+import esir.progm.untitledsharkgames.jeux.feedTheShark.FeedTheShark;
 import esir.progm.untitledsharkgames.jeux.quiz.QuizActivity;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
+import esir.progm.untitledsharkgames.jeux.spinTheShark.SpinTheShark;
 
 public class SinglePlayerMenu extends AppCompatActivity {
     /*                    hide UI parameters                    */
@@ -58,6 +60,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
     private int nb_results;
     FileOutputStream os;
     InputStream is;
+    private final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SpinTheShark.class, SharkSlap.class}}; // Différents jeux qu'il est possible de lancer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +134,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
             games = createGameList();
             if(games.get(0) == QuizActivity.class) {
                 Intent intent = new Intent(SinglePlayerMenu.this, games.get(0));
-                String[] themes = {"starwars", "pokemon"};
+                String[] themes = {"starwars", "pokemon", "progm"};
                 int index = new Random().nextInt(themes.length);
                 intent.putExtra("theme", themes[index]);
                 activityResultLauncher.launch(intent);
@@ -139,7 +142,6 @@ public class SinglePlayerMenu extends AppCompatActivity {
                 activityResultLauncher.launch(new Intent(SinglePlayerMenu.this, games.get(0)));
             }
         });
-
         ImageButton exit = findViewById(R.id.singleplayer_exit);
         exit.setOnClickListener(view -> finish());
 
@@ -198,21 +200,15 @@ public class SinglePlayerMenu extends AppCompatActivity {
 
         // Loop for games number
         for(int i=0; i<nb_games; i++) {
+            int j = i%3;
             // Generate a number between 1 and number of available games
-            int low = 1;
-            int high = 4;
-            int result = new Random().nextInt(high-low) + low;
-
-            // Match random number to a game
-            if(result == 1) {
-                games.add(SharkSlap.class);
-            } else if (result == 2) {
+            if (j==2) {
                 games.add(QuizActivity.class);
-            } else if (result == 4) {
-                games.add(WhrilOtter.class);
+            } else {
+                int random = new Random().nextInt(POUL[j].length);
+                games.add(POUL[j][random]);
             }
         }
-
         return games;
     }
 
@@ -224,7 +220,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
         // If first game is a quizz, randomly choose the theme, otherwise launch game directly
         if(games.get(0) == QuizActivity.class) {
             Intent intent = new Intent(SinglePlayerMenu.this, games.get(game));
-            String[] themes = {"starwars", "pokemon"};
+            String[] themes = {"starwars", "pokemon", "progm"};
             int index = new Random().nextInt(themes.length);
             intent.putExtra("theme", themes[index]);
             activityResultLauncher.launch(intent);
