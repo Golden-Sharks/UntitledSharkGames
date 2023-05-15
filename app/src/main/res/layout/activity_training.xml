@@ -87,6 +87,18 @@
                 android:textColor="@color/black"
                 android:backgroundTint="@color/persoWhite"
                 android:fontFamily="@font/dancing_script_regular"/>
+
+            <Button
+                android:id="@+id/spin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spin the shark"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="25dp"
+                android:backgroundTint="@color/persoWhite"
+                android:fontFamily="@font/dancing_script_regular"/>
         </LinearLayout>
 
     </RelativeLayout>

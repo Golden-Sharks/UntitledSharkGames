@@ -15,6 +15,7 @@ import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
+import esir.progm.untitledsharkgames.jeux.spinTheShark.SpinTheShark;
 
 public class Training extends AppCompatActivity {
 
@@ -59,6 +60,9 @@ public class Training extends AppCompatActivity {
 
         Button feedSkark = findViewById(R.id.FeedSkark);
         feedSkark.setOnClickListener(view -> startActivity(new Intent(Training.this, FeedTheShark.class)));
+
+        Button spinShark = findViewById(R.id.spin);
+        spinShark.setOnClickListener(view -> startActivity(new Intent(Training.this, SpinTheShark.class)));
     }
 
     @Override
