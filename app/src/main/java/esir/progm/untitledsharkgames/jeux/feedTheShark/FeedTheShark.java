@@ -189,17 +189,24 @@ public class FeedTheShark extends AppCompatActivity{
 
                         score += 100;
                         publishProgress();
+
+
                         int fish_new_x = random.nextInt(SCREEN_WIDTH-fish_imageView.getWidth());
                         int fish_new_y = random.nextInt(SCREEN_HEIGHT-fish_imageView.getHeight());
                         int shark_new_x = random.nextInt(SCREEN_WIDTH-shark_imageView.getWidth());
                         int shark_new_y = random.nextInt(SCREEN_HEIGHT-shark_imageView.getHeight());
 
-                        if (computeDistance(fish_new_x, fish_new_y, shark_new_x, shark_new_y) > 300) {
-                            shark_imageView.setX(shark_new_x);
-                            shark_imageView.setY(shark_new_y);
-                            fish_imageView.setX(fish_new_x);
-                            fish_imageView.setY(fish_new_y);
+
+                        while (computeDistance(fish_new_x, fish_new_y, shark_new_x, shark_new_y) < 300) {
+                            fish_new_x = random.nextInt(SCREEN_WIDTH-fish_imageView.getWidth());
+                            fish_new_y = random.nextInt(SCREEN_HEIGHT-fish_imageView.getHeight());
+                            shark_new_x = random.nextInt(SCREEN_WIDTH-shark_imageView.getWidth());
+                            shark_new_y = random.nextInt(SCREEN_HEIGHT-shark_imageView.getHeight());
                         }
+                        shark_imageView.setX(shark_new_x);
+                        shark_imageView.setY(shark_new_y);
+                        fish_imageView.setX(fish_new_x);
+                        fish_imageView.setY(fish_new_y);
                     }
                 }
             }
