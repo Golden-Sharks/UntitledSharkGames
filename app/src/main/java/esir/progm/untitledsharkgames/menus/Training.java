@@ -37,7 +37,7 @@ public class Training extends AppCompatActivity {
 
         View decor = getWindow().getDecorView();
         decor.setOnSystemUiVisibilityChangeListener(visibility -> {
-            if(visibility==0) {
+            if (visibility == 0) {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
@@ -66,29 +66,24 @@ public class Training extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(isOnBackground) {
-            MusicPlayer.getInstance().pause();
-        }
+    protected void onResume() {
+        super.onResume();
+        MusicPlayer.getInstance().resume();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(hideSystemBars);
         }
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        if(level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
+        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
                 level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND ||
                 level == ComponentCallbacks2.TRIM_MEMORY_MODERATE ||
                 level == ComponentCallbacks2.TRIM_MEMORY_COMPLETE) {

@@ -74,27 +74,12 @@ public class FeedTheShark extends AppCompatActivity{
         new FeedTheSharkTask().execute();
     }
 
-    private void setScoreText(String text) {
-        score_tw.setText(text);
-    }
-
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(isOnBackground) {
-            MusicPlayer.getInstance().pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(hideSystemBars);
         }
     }
 
@@ -108,6 +93,10 @@ public class FeedTheShark extends AppCompatActivity{
             isOnBackground = true;
             onPause(); // https://i.kym-cdn.com/photos/images/original/000/639/420/094.gif
         }
+    }
+
+    private void setScoreText(String text) {
+        score_tw.setText(text);
     }
 
     /**********************************************************************************************/

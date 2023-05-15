@@ -242,23 +242,18 @@ public class SinglePlayerMenu extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(isOnBackground) {
-            MusicPlayer.getInstance().pause();
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(hideSystemBars);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
-        }
+        MusicPlayer.getInstance().resume();
     }
 
     @Override

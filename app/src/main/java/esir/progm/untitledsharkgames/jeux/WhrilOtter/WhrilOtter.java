@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -46,6 +48,7 @@ public class WhrilOtter extends AppCompatActivity {
     private TextView textView;
     private WhrilOtterTask whrilOtterTask;
     private int score = 0;
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,10 @@ public class WhrilOtter extends AppCompatActivity {
         imageView = findViewById(R.id.otter);
         textView = findViewById(R.id.wind_score_text);
 
+        MusicPlayer.getInstance().pause();
+        player = MediaPlayer.create(getApplicationContext(), R.raw.tourbiloutre);
+        player.start();
+
         // Start game
         whrilOtterTask = new WhrilOtterTask();
         whrilOtterTask.execute();
@@ -75,30 +82,24 @@ public class WhrilOtter extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        // stop music player when activity is on pause
-        if (isOnBackground) {
-            MusicPlayer.getInstance().pause();
-        }
+    public void finish() {
+        super.finish();
+        player.stop();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(hideSystemBars);
         }
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
+        if(level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN ||
                 level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND ||
                 level == ComponentCallbacks2.TRIM_MEMORY_MODERATE ||
                 level == ComponentCallbacks2.TRIM_MEMORY_COMPLETE) {

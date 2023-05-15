@@ -93,24 +93,12 @@ public class SharkSlap extends Game {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(isOnBackground) {
-            MusicPlayer.getInstance().pause();
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(hideSystemBars);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MusicPlayer.getInstance().resume();
-        isOnBackground = false;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-//        MusicPlayer.getInstance().stop();
     }
 
     @Override
