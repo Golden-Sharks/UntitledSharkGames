@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -32,6 +33,7 @@ public class QuizActivity extends AppCompatActivity {
     private CountDownTimer mCountDownTimer; // Timer de chaque question
     private String theme; // Theme du quiz
     private int score; // Score du joueur
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class QuizActivity extends AppCompatActivity {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
+        MusicPlayer.getInstance().stop();
         // Set up le theme en fonction de l'intent utilisé pour créer l'activité
         Bundle b = getIntent().getExtras();
         if (b!=null) {
@@ -53,6 +56,8 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             this.theme = "";
         }
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.quiz_pokemon);
+        mediaPlayer.start();
         launch();
     }
 
@@ -165,6 +170,7 @@ public class QuizActivity extends AppCompatActivity {
     private void endRound() {
         if (isRight) {
             this.score += 100;
+            MediaPlayer.create(getApplicationContext(), R.raw.score_up).start();
             isRight = false;
         }
         boolean isEnd = qq.setUpNewQuestion();
@@ -192,6 +198,12 @@ public class QuizActivity extends AppCompatActivity {
         setProgressBar();
         setTextView(questionStrings[0]);
         setButtons(questionStrings);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
     }
 
     @Override

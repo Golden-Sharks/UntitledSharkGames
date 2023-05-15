@@ -28,6 +28,7 @@ public class SharkSlap extends Game {
     private int score;
     private TextView score_text;
     private ArrayList<Place> places;
+    private MediaPlayer mainMP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,16 @@ public class SharkSlap extends Game {
             if(visibility==0) {decor.setSystemUiVisibility(hideSystemBars);}
         });
 
+        mainMP = MediaPlayer.create(getApplicationContext(), R.raw.shark_slap);
+
+        MusicPlayer.getInstance().stop();
+
         launch();
     }
 
     @Override
     public void launch() {
         // Set all sharks
-        MusicPlayer.getInstance().stop();
         places = new ArrayList<>();
         places.add(new Place(findViewById(R.id.shark1_1), this));
         places.add(new Place(findViewById(R.id.shark1_2), this));
@@ -69,7 +73,10 @@ public class SharkSlap extends Game {
         // Create new media player
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shark_slap_init);
 
-        mediaPlayer.setOnCompletionListener(mediaPlayer1 -> new SharkSlapGame(SharkSlap.this, getApplicationContext(), places).execute());
+        mediaPlayer.setOnCompletionListener(mediaPlayer1 -> {
+            mainMP.start();
+            new SharkSlapGame(SharkSlap.this, getApplicationContext(), places).execute();
+        });
 
         mediaPlayer.start();
     }
@@ -89,7 +96,14 @@ public class SharkSlap extends Game {
         } else {
             score += quantity;
         }
+        MediaPlayer.create(getApplicationContext(), R.raw.score_up).start();
         score_text.setText(score+"");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainMP.stop();
     }
 
     @Override

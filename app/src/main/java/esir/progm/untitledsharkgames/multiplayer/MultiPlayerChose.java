@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 

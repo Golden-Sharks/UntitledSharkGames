@@ -3,7 +3,6 @@ package esir.progm.untitledsharkgames.jeux.WhrilOtter;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.loader.content.AsyncTaskLoader;
 
 import android.Manifest;
 import android.content.ComponentCallbacks2;
@@ -15,7 +14,6 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,10 +23,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.nio.channels.AsynchronousByteChannel;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
@@ -48,7 +42,6 @@ public class WhrilOtter extends AppCompatActivity {
     private TextView textView;
     private WhrilOtterTask whrilOtterTask;
     private int score = 0;
-    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +59,19 @@ public class WhrilOtter extends AppCompatActivity {
             }
         });
 
+        MusicPlayer.getInstance().stop();
+
         // Get layout elements
         imageView = findViewById(R.id.otter);
         textView = findViewById(R.id.wind_score_text);
 
         MusicPlayer.getInstance().pause();
-        player = MediaPlayer.create(getApplicationContext(), R.raw.tourbiloutre);
-        player.start();
 
         // Start game
         whrilOtterTask = new WhrilOtterTask();
         whrilOtterTask.execute();
 
 
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        player.stop();
     }
 
     @Override
@@ -219,10 +206,8 @@ public class WhrilOtter extends AppCompatActivity {
             super.onPostExecute(integer);
             // Creat new intent and push score
             Intent intent = new Intent();
-            intent.putExtra("score", nb_tours*50);
+            intent.putExtra("score", score);
             setResult(78, intent);
-            // stop media player
-            MusicPlayer.getInstance().stop();
             // stop activity
             finish();
         }
@@ -232,6 +217,7 @@ public class WhrilOtter extends AppCompatActivity {
             super.onProgressUpdate(values);
             if(rotation - (360*nb_tours+1) > 360) {
                 score += 20;
+                MediaPlayer.create(getApplicationContext(), R.raw.score_up).start();
                 textView.setText(score + " pts");
             }
             textView.setText(score+" pts");

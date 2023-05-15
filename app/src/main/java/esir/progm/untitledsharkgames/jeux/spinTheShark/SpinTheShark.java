@@ -3,9 +3,9 @@ package esir.progm.untitledsharkgames.jeux.spinTheShark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -13,10 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +40,7 @@ public class SpinTheShark extends AppCompatActivity {
     private GestureDetector gestureDetector;
     private SpinTheSharkTask task;
 
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +56,10 @@ public class SpinTheShark extends AppCompatActivity {
             }
         });
 
+        MusicPlayer.getInstance().stop();
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spin_the_requin);
+        mediaPlayer.start();
+
         // Init attributes
         imageView = findViewById(R.id.spin_shark);
         textView = findViewById(R.id.spin_score_text);
@@ -65,6 +68,12 @@ public class SpinTheShark extends AppCompatActivity {
         task.execute();
         gestureDetector = new GestureDetector(this, task);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
     }
 
     @Override
@@ -167,8 +176,7 @@ public class SpinTheShark extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra("score", score);
             setResult(78, intent);
-            // stop media player
-            MusicPlayer.getInstance().stop();
+            mediaPlayer.stop();
             // stop activity
             finish();
         }

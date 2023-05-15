@@ -37,6 +37,7 @@ import esir.progm.untitledsharkgames.jeux.spinTheShark.SpinTheShark;
  */
 public abstract class Multijoueur extends AppCompatActivity {
 
+    private MediaPlayer mediaPlayer;
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -72,6 +73,7 @@ public abstract class Multijoueur extends AppCompatActivity {
         } else {
             pseudonyme = "default";
         }
+        MusicPlayer.getInstance().pause();
         server = new Server(this);
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -119,6 +121,28 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void drawOwnUiScores() {
         ((TextView)findViewById(R.id.J1_pseudo)).setText(this.pseudonyme+" : "+this.score);
         drawRectangle(findViewById(R.id.J1_score), this.score);
+        int advScore = recupAdvScoreOnUI();
+        if (this.score > advScore) {
+            ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.victory_song);
+        }
+        else if (this.score < advScore) {
+            ((TextView)findViewById(R.id.victory)).setText("PERDU");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.defeat_song);
+        }
+        else {
+            ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song);
+        }
+    }
+
+    private int recupAdvScoreOnUI() {
+        String[] all = ((TextView)findViewById(R.id.J2_pseudo)).getText().toString().split(" ");
+        String scoreAdv = "0";
+        if (all.length==3) {
+            scoreAdv = all[2];
+        }
+        return Integer.parseInt(scoreAdv);
     }
 
     /**
@@ -127,9 +151,19 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void drawAdversaryUiScores(String pseudo, int score) {
         ((TextView)findViewById(R.id.J2_pseudo)).setText(pseudo+" : "+score);
         drawRectangle(findViewById(R.id.J2_score), score);
-        if (this.score > score) ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
-        else if (this.score < score) ((TextView)findViewById(R.id.victory)).setText("PERDU");
-        else ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
+        if (this.score > score) {
+            ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.victory_song);
+        }
+        else if (this.score < score) {
+            ((TextView)findViewById(R.id.victory)).setText("PERDU");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.defeat_song);
+        }
+        else {
+            ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song);
+        }
+        mediaPlayer.stop();
     }
 
     protected void drawScore() {
@@ -140,14 +174,7 @@ public abstract class Multijoueur extends AppCompatActivity {
             home.setText("HOME");
             home.setVisibility(View.VISIBLE);
 
-            if (victory.getText().equals("VICTOIRE")) {
-                MediaPlayer.create(getApplicationContext(), R.raw.victory_song).start();
-            } else if (victory.getText().equals("PERDU")){
-                MediaPlayer.create(getApplicationContext(), R.raw.defeat_song).start();
-            } else {
-                MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song).start();
-            }
-
+            mediaPlayer.start();
             home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -173,6 +200,7 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (server!=null) server.onDestroy();
+        if (mediaPlayer!=null) mediaPlayer.stop();
     }
 
     @Override

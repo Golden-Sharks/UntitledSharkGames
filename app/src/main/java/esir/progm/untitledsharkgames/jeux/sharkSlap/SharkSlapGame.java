@@ -2,6 +2,7 @@ package esir.progm.untitledsharkgames.jeux.sharkSlap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ public class SharkSlapGame extends AsyncTask<Void, Void, Integer> {
     public SharkSlapGame(SharkSlap activity, Context context, ArrayList<Place> places) {
         this.activity = activity;
         this.places = places;
-        MusicPlayer.getInstance().play(context, R.raw.shark_slap, true);
     }
 
     @Override

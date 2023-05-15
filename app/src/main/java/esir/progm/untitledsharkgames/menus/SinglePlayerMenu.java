@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -60,6 +61,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
     private int nb_results;
     FileOutputStream os;
     InputStream is;
+    private MediaPlayer mediaPlayer;
     private final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SpinTheShark.class, SharkSlap.class}}; // Différents jeux qu'il est possible de lancer
 
     @Override
@@ -111,6 +113,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
             String username = username_feild.getText().toString();
             if (isPseudoValid(username)) {
                 ScoreDB.getInstance(is, os).addOnLeaderboard(username, score);
+                mediaPlayer.stop();
                 finish();
             }
         });
@@ -233,6 +236,8 @@ public class SinglePlayerMenu extends AppCompatActivity {
      * Change UI at the end of a game loop
      */
     private void end() {
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.end_singleplayer);
+        mediaPlayer.start();
         items.setVisibility(View.GONE);
         final_score.setText(score + "pts");
         finish_screen.setVisibility(View.VISIBLE);

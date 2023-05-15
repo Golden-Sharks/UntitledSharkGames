@@ -44,6 +44,7 @@ public class FeedTheShark extends AppCompatActivity{
     private ImageView shark_imageView;
     private TextView score_tw;
     private int score;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,9 @@ public class FeedTheShark extends AppCompatActivity{
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
-
+        MusicPlayer.getInstance().stop();
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.feed_the_shark);
+        mediaPlayer.start();
         // get layout elements
         fish_imageView = findViewById(R.id.FeedSkark_fish);
         shark_imageView = findViewById(R.id.FeedSkark_shark);
@@ -81,6 +84,12 @@ public class FeedTheShark extends AppCompatActivity{
             View decor = getWindow().getDecorView();
             decor.setSystemUiVisibility(hideSystemBars);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
     }
 
     @Override
@@ -186,7 +195,7 @@ public class FeedTheShark extends AppCompatActivity{
                         int shark_new_y = random.nextInt(SCREEN_HEIGHT-shark_imageView.getHeight());
 
 
-                        while (computeDistance(fish_new_x, fish_new_y, shark_new_x, shark_new_y) < 300) {
+                        while (computeDistance(fish_new_x, fish_new_y, shark_new_x, shark_new_y) < 500) {
                             fish_new_x = random.nextInt(SCREEN_WIDTH-fish_imageView.getWidth());
                             fish_new_y = random.nextInt(SCREEN_HEIGHT-fish_imageView.getHeight());
                             shark_new_x = random.nextInt(SCREEN_WIDTH-shark_imageView.getWidth());
@@ -234,10 +243,7 @@ public class FeedTheShark extends AppCompatActivity{
         }
 
         @Override
-        public void onAccuracyChanged(Sensor sensor, int i) {
-
-        }
-
+        public void onAccuracyChanged(Sensor sensor, int i) {}
 
         @Override
         protected void onPostExecute(Integer integer) {
@@ -245,7 +251,7 @@ public class FeedTheShark extends AppCompatActivity{
             Intent intent = new Intent();
             intent.putExtra("score", score);
             setResult(78, intent);
-            //MusicPlayer.getInstance().stop();
+            mediaPlayer.stop();
             finish();
         }
     }
