@@ -68,8 +68,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="50dp"
             android:textColor="@color/gold"
+            android:fontFamily="@font/dancing_script_regular"
             android:layout_gravity="center"
             android:visibility="gone"
             android:id="@+id/victory"/>
@@ -81,24 +82,24 @@
             android:id="@+id/J1_pseudo"/>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="25dp"
             android:maxWidth="400dp"
             android:layout_marginBottom="15dp"
             android:background="@color/myGreen"
             android:id="@+id/J1_score"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:maxWidth="400dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/myGreen"
-            android:id="@+id/J2_score"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/J2_pseudo"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:maxWidth="400dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/myGreen"
+            android:id="@+id/J2_score"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
