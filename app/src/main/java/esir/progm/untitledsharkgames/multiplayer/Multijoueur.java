@@ -125,14 +125,14 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void drawAdversaryUiScores(String pseudo, int score) {
         ((TextView)findViewById(R.id.J2_pseudo)).setText(pseudo+" : "+score);
         drawRectangle(findViewById(R.id.J2_score), score);
+        if (this.score > score) ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
+        else if (this.score < score) ((TextView)findViewById(R.id.victory)).setText("PERDU");
+        else ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
     }
 
     protected void drawScore() {
         if (nb_results==games.size()) {
-            if (this.score > Integer.parseInt(relevant[1])) ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
-            else if (this.score < Integer.parseInt(relevant[1])) ((TextView)findViewById(R.id.victory)).setText("PERDU");
-            else ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
-
+            findViewById(R.id.victory).setVisibility(View.VISIBLE);
             Button home = findViewById(R.id.next);
             home.setText("HOME");
             home.setVisibility(View.VISIBLE);

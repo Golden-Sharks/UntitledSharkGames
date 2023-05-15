@@ -65,6 +65,7 @@
             android:textSize="30dp"
             android:textColor="@color/gold"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:id="@+id/victory"/>
         <TextView
             android:layout_width="wrap_content"
