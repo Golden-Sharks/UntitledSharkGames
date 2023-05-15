@@ -81,6 +81,14 @@ public class QuizTrainingTheme extends AppCompatActivity {
                 launchWithTheme("progm");
             }
         });
+
+        Button requin = findViewById(R.id.requin);
+        requin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchWithTheme("requin");
+            }
+        });
     }
 
     @Override

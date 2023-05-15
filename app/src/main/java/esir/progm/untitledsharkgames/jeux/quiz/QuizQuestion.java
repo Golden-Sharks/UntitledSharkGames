@@ -35,15 +35,20 @@ public class QuizQuestion {
             case "progm":
                 is = context.getResources().openRawResource(R.raw.quiz_progm);
                 break;
+            case "requin":
+                is = context.getResources().openRawResource(R.raw.quiz_requin);
+                break;
             default:
                 // Par défaut on choisit aléatoirement
-                int choice = new Random().nextInt(3);
+                int choice = new Random().nextInt(4);
                 if (choice==0) {
                     is = context.getResources().openRawResource(R.raw.quiz_starwars);
                 }else if (choice==1) {
                     is = context.getResources().openRawResource(R.raw.quiz_pokemon);
-                } else {
+                } else if (choice==2){
                     is = context.getResources().openRawResource(R.raw.quiz_progm);
+                } else {
+                    is = context.getResources().openRawResource(R.raw.quiz_requin);
                 }
         }
         // Lis les questions voulues

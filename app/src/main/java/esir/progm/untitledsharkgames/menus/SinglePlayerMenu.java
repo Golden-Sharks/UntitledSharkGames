@@ -134,7 +134,7 @@ public class SinglePlayerMenu extends AppCompatActivity {
             games = createGameList();
             if(games.get(0) == QuizActivity.class) {
                 Intent intent = new Intent(SinglePlayerMenu.this, games.get(0));
-                String[] themes = {"starwars", "pokemon", "progm"};
+                String[] themes = {"starwars", "pokemon", "progm", "requin"};
                 int index = new Random().nextInt(themes.length);
                 intent.putExtra("theme", themes[index]);
                 activityResultLauncher.launch(intent);

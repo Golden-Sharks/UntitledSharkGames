@@ -87,7 +87,7 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void launchGames(int nb) {
         if (nb==2) {
             Intent intent = new Intent(Multijoueur.this, games.get(nb));
-            String[] themes = {"starwars","pokemon","progm"};
+            String[] themes = {"starwars","pokemon","progm", "requin"};
             intent.putExtra("theme", themes[tirageAuSort[2]]);
             activityResultLauncher.launch(intent);
         } else {

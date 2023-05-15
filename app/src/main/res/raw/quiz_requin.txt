@@ -1,0 +1,8 @@
+Quelle espèce est autorisé en tant qu'animal de compagnie?,La Roussette,Le Grand Requin Blanc,Le Requin Baleine,Le Requin Tigre
+Combien d'espèces de requin sont répertoriées?,500,100,300,700
+En moyenne, combien de personnes (par an) sont tuées par des requins?,10,5,20,10000
+En moyenne, combien de requin (en millions par an) sont tués?,100,500,700,5
+Quelle espèce n'existe pas?,Requin Loup,Requin Baleine,Requin Lézard,Requin Lutin
+Quelle espèce existe?,Requin Citron,Requin Carotte,Requin Pastèque,Requin Farfadet
+Combien de dent contient la mâchoire du grand requin blanc?,50,30,80,300
+Quel Pokemon est inspiré par un requin?,Carchacrok,Aqualie,Kyogre,Carvana
