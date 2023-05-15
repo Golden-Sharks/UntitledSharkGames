@@ -1,6 +1,7 @@
 package esir.progm.untitledsharkgames.multiplayer;
 
 import android.content.ComponentCallbacks2;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,15 +17,22 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import esir.progm.untitledsharkgames.Communication.Server;
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
+import esir.progm.untitledsharkgames.ScoreDB;
 import esir.progm.untitledsharkgames.jeux.WhrilOtter.WhrilOtter;
 import esir.progm.untitledsharkgames.jeux.feedTheShark.FeedTheShark;
 import esir.progm.untitledsharkgames.jeux.sharkSlap.SharkSlap;
 
+/**
+ * Classe abstraite gérant les comportements communs au client et à l'hébergeur
+ */
 public abstract class Multijoueur extends AppCompatActivity {
 
     private int hideSystemBars = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -34,14 +42,14 @@ public abstract class Multijoueur extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     private boolean isOnBackground = false;
-    protected String[] relevant;
+    protected String[] relevant; // Stocks les données importantes des messages
     protected int score = 0;
     protected String pseudonyme;
     public ActivityResultLauncher<Intent> activityResultLauncher;
     protected Server server;
     protected List<Class> games;
     protected int nb_results = 0;
-    protected final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SharkSlap.class}};
+    protected final Class[][] POUL = {{WhrilOtter.class, FeedTheShark.class},{SharkSlap.class}}; // Différents jeux qu'il est possible de lancer
     protected int[] tirageAuSort = new int[3];
     public abstract void setMsg(String message);
 
@@ -72,6 +80,9 @@ public abstract class Multijoueur extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Lance un jeu à partir de la liste des jeux
+     */
     protected void launchGames(int nb) {
         if (nb==2) {
             Intent intent = new Intent(Multijoueur.this, games.get(nb));
@@ -100,14 +111,20 @@ public abstract class Multijoueur extends AppCompatActivity {
         }
     }
 
+    /**
+     * Affiche le score du joueur local sur l'UI
+     */
     protected void drawOwnUiScores() {
         ((TextView)findViewById(R.id.J1_pseudo)).setText(this.pseudonyme+" : "+this.score);
         drawRectangle(findViewById(R.id.J1_score), this.score);
     }
 
+    /**
+     * Affiche le score et le pseudo du joueur 2 sur l'UI
+     */
     protected void drawAdversaryUiScores(String pseudo, int score) {
-        ((TextView)findViewById(R.id.J2_pseudo)).setText(this.relevant[0]+" : "+this.relevant[1]);
-        drawRectangle(findViewById(R.id.J2_score), Integer.parseInt(this.relevant[1]));
+        ((TextView)findViewById(R.id.J2_pseudo)).setText(pseudo+" : "+score);
+        drawRectangle(findViewById(R.id.J2_score), score);
     }
 
     protected void drawScore() {
@@ -122,6 +139,13 @@ public abstract class Multijoueur extends AppCompatActivity {
             home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    try {
+                        FileOutputStream os = getApplicationContext().openFileOutput("scores.txt", Context.MODE_PRIVATE);
+                        InputStream is = getApplicationContext().getResources().openRawResource(R.raw.scores);
+                        ScoreDB.getInstance(is, os).addOnLeaderboard(pseudonyme, score);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace(); // Le fichier n'existe plus ce qui n'est pas normal
+                    }
                     finish();
                 }
             });

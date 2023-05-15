@@ -108,8 +108,8 @@ public class SinglePlayerMenu extends AppCompatActivity {
             String username = username_feild.getText().toString();
             if (isPseudoValid(username)) {
                 ScoreDB.getInstance(is, os).addOnLeaderboard(username, score);
+                finish();
             }
-            finish();
         });
 
         up.setOnClickListener(view -> {
