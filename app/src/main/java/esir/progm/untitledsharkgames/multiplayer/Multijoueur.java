@@ -3,6 +3,7 @@ package esir.progm.untitledsharkgames.multiplayer;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -133,10 +134,20 @@ public abstract class Multijoueur extends AppCompatActivity {
 
     protected void drawScore() {
         if (nb_results==games.size()) {
-            findViewById(R.id.victory).setVisibility(View.VISIBLE);
+            TextView victory = findViewById(R.id.victory);
+            victory.setVisibility(View.VISIBLE);
             Button home = findViewById(R.id.next);
             home.setText("HOME");
             home.setVisibility(View.VISIBLE);
+
+            if (victory.getText().equals("VICTOIRE")) {
+                MediaPlayer.create(getApplicationContext(), R.raw.victory_song).start();
+            } else if (victory.getText().equals("PERDU")){
+                MediaPlayer.create(getApplicationContext(), R.raw.defeat_song).start();
+            } else {
+                MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song).start();
+            }
+
             home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -162,26 +173,6 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (server!=null) server.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(isOnBackground) {
-            MusicPlayer.getInstance().pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!isOnBackground) {
-            MusicPlayer.getInstance().stop();
-            MusicPlayer.getInstance().play(getApplicationContext(), R.raw.main_menu, true);
-        } else {
-            MusicPlayer.getInstance().resume();
-            isOnBackground = false;
-        }
     }
 
     @Override
