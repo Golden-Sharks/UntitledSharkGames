@@ -30,8 +30,10 @@ public class MultiClient extends Multijoueur {
             public void onClick(View view) {
                 String code = info.getText().toString();
                 String adress = getIpFromCode(code);
-                Communication.setIpHost(adress);
-                Communication.sendMessage("/"+pseudonyme);
+                if (!adress.equals("")){
+                    Communication.setIpHost(adress);
+                    Communication.sendMessage("/"+pseudonyme);
+                }
             }
         });
 
@@ -50,20 +52,25 @@ public class MultiClient extends Multijoueur {
      * (les deux doivent être sur le même réseau)
      */
     private String getIpFromCode(String code) {
-        String IP = server.getIpAddress();
-        StringBuilder finalIP = new StringBuilder(20);
-        int countDot = 0;
-        int indice = 0;
-        while (countDot<2){
-            char c = IP.charAt(indice);
-            if (c=='.') {
-                countDot++;
+        try {
+            String IP = server.getIpAddress();
+            StringBuilder finalIP = new StringBuilder(20);
+            int countDot = 0;
+            int indice = 0;
+            while (countDot<2){
+                char c = IP.charAt(indice);
+                if (c=='.') {
+                    countDot++;
+                }
+                finalIP.append(c);
+                indice++;
             }
-            finalIP.append(c);
-            indice++;
+            finalIP.append(code);
+            return finalIP.toString();
+        } catch(Exception e) {
+            ((TextView)findViewById(R.id.infos)).setText("Pensez à activer le wifi");
+            return "";
         }
-        finalIP.append(code);
-        return finalIP.toString();
     }
 
     /**
