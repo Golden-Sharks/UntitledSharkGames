@@ -1,9 +1,9 @@
 package esir.progm.untitledsharkgames.jeux.WhrilOtter;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.loader.content.AsyncTaskLoader;
 
 import android.Manifest;
 import android.content.ComponentCallbacks2;
@@ -18,8 +18,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.nio.channels.AsynchronousByteChannel;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import esir.progm.untitledsharkgames.MusicPlayer;
 import esir.progm.untitledsharkgames.R;
@@ -38,6 +45,7 @@ public class WhrilOtter extends AppCompatActivity {
     private ImageView imageView;
     private TextView textView;
     private WhrilOtterTask whrilOtterTask;
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +71,10 @@ public class WhrilOtter extends AppCompatActivity {
         whrilOtterTask = new WhrilOtterTask();
         whrilOtterTask.execute();
 
+
     }
 
+    @Override
     protected void onPause() {
         super.onPause();
         // stop music player when activity is on pause
@@ -102,25 +112,21 @@ public class WhrilOtter extends AppCompatActivity {
     /**********************************************************************************************/
     private class WhrilOtterTask extends AsyncTask<Void, Double, Integer> {
         /*                    Final atributes                    */
-        private final int TIME_OF_GAME = 10000;
+        private final int GAME_DURATION = 20000;
         private final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE,
                 AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-        private static final int MAX_ROTATION_SPEED = 100;
-        private static final int MIN_ROTATION_SPEED = 5;
-        private static final double MAX_POWER = 200000000.0;
-        private static final int UPDATE_INTERVAL = 10;
+        private final int NOISE_THRESHOLD = 2000000;
         private static final int SAMPLE_RATE = 44100;
-        private static final double DECREASE_FORCE = 0.01;
-        private static final float DELTA_TIME_NORM = 250.0f;
-        private static final float ROTATION_NORM = 1000.0f;
+        private final long COOLDOWN = 150;
 
         /*                       atributes                       */
         private int nb_tours = 0;
-        private int rotationSpeed;
-        private long lastUpdateTime;
         private boolean isRecording;
         private AudioRecord audioRecord;
-        private short[] buffer;
+        byte[] buffer = new byte[BUFFER_SIZE];
+        private float angle;
+        private float rotation = 0;
+        private long last_update = 0;
 
         public WhrilOtterTask() {
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) !=
@@ -129,7 +135,6 @@ public class WhrilOtter extends AppCompatActivity {
             }
             this.audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE);
         }
-
 
         @Override
         protected void onCancelled() {
@@ -149,49 +154,30 @@ public class WhrilOtter extends AppCompatActivity {
                 ActivityCompat.requestPermissions(WhrilOtter.this, new String[]{Manifest.permission.RECORD_AUDIO}, 1);
             } else {
                 try {
-                    // init parameters
-                    byte[] buffer = new byte[BUFFER_SIZE];
-                    double lastPower = 0.0;
-                    double currentPower = 0.0;
-                    int rotations = 0;
-
                     // start recording
                     audioRecord.startRecording();
                     isRecording = true;
-                    lastUpdateTime = System.currentTimeMillis();
+                    last_update = System.currentTimeMillis();
 
                     // Main Loop
                     long start = System.currentTimeMillis();
-                    while (isRecording && (System.currentTimeMillis()-start <TIME_OF_GAME)) {
-                        // read values
-                        int bytesRead = audioRecord.read(buffer, 0, BUFFER_SIZE);
+                    while(System.currentTimeMillis() - start < GAME_DURATION) {
+                        if(System.currentTimeMillis() - last_update > COOLDOWN) {
+                            if(computePower()>10) {
+                                angle = (float) (computePower()*0.5);
 
-                        for (int i = 0; i < bytesRead; i += 2) {
-                            short value = (short) ((buffer[i] & 0xFF) | (buffer[i + 1] << 8));
-                            currentPower += value * value;
+                                RotateAnimation rotateAnimation = new RotateAnimation(rotation, angle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                rotateAnimation.setDuration(500);
+                                rotateAnimation.setInterpolator(new DecelerateInterpolator());
+                                rotateAnimation.setFillAfter(true);
+                                imageView.startAnimation(rotateAnimation);
+
+                                rotation += angle;
+
+                                last_update = System.currentTimeMillis();
+                                publishProgress();
+                            }
                         }
-
-                        // Compute power
-                        double powerDiff = currentPower - lastPower;
-
-                        if (powerDiff > MAX_POWER) {powerDiff = MAX_POWER;}
-
-                        double powerRatio = powerDiff / MAX_POWER;
-                        // compute rotation speed => Corrected by ChatGPT
-                        rotationSpeed = (int) (MIN_ROTATION_SPEED + (MAX_ROTATION_SPEED - MIN_ROTATION_SPEED) * powerRatio);
-
-
-                        // update value if necessary
-                        long currentTime = System.currentTimeMillis();
-
-                        if (currentTime - lastUpdateTime >= UPDATE_INTERVAL) {
-                            lastUpdateTime = currentTime;
-                            rotations += rotationSpeed * (currentTime - lastUpdateTime) / ROTATION_NORM;
-                            publishProgress((double) rotations);
-                        }
-
-                        lastPower = currentPower;
-                        currentPower = 0.0;
                     }
 
                     // Stop and release recorder
@@ -204,6 +190,27 @@ public class WhrilOtter extends AppCompatActivity {
                 }
             }
             return 0;
+        }
+
+        private double computePower() {
+            double res = 0;
+            int bytesRead = audioRecord.read(buffer, 0, BUFFER_SIZE);
+
+            for (int i = 0; i < bytesRead; i += 2) {
+                short value = (short) ((buffer[i] & 0xFF) | (buffer[i + 1] << 8));
+                res += value * value;
+            }
+
+            res -= NOISE_THRESHOLD;
+            if (res<0) {res = 0;}
+
+            long ratio = 1000000000;
+            res = (res/ratio)/10;
+
+            if(res < 0.01)
+                res = 0;
+
+            return res;
         }
 
         @Override
@@ -222,38 +229,11 @@ public class WhrilOtter extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Double... values) {
             super.onProgressUpdate(values);
-            updateRotation(rotationSpeed);
-
-            // If the image has made a complete rotation, we update counter and reset rotation to zero
-            if (imageView.getRotation() <= -360f) {
-                nb_tours++;
-                textView.setText(String.valueOf((int) nb_tours*50));
-
-                // Réinitialiser la rotation de l'image
-                imageView.setRotation(imageView.getRotation() + 360f);
+            if(rotation - (360*nb_tours+1) > 360) {
+                score += 20;
+                textView.setText(score + " pts");
             }
-        }
-
-        private void updateRotation(float rotation_speed) {
-            // Avoid back rotation and reduce lag
-            rotation_speed = - Math.abs(rotation_speed);
-            long currentTime = System.currentTimeMillis();
-
-            // update values if nessecary
-            if (lastUpdateTime != 0) {
-                float timeDelta = (currentTime - lastUpdateTime) / DELTA_TIME_NORM;
-                float rotationDelta = rotation_speed * timeDelta + 0.5f * rotation_speed * timeDelta * timeDelta;
-                imageView.setRotation(imageView.getRotation() + rotationDelta);
-            }
-
-            // update rotation => inertia by ChatGPT
-            this.rotationSpeed += rotation_speed * (currentTime - lastUpdateTime) / ROTATION_NORM - DECREASE_FORCE * (currentTime - lastUpdateTime) / ROTATION_NORM;
-            lastUpdateTime = currentTime;
-
-            // Limit speed
-            if (this.rotationSpeed > MAX_ROTATION_SPEED) {
-                this.rotationSpeed = MAX_ROTATION_SPEED;
-            }
+            textView.setText(score+" pts");
         }
     }
 }

@@ -111,8 +111,6 @@ public class SpinTheShark extends AppCompatActivity {
     private class SpinTheSharkTask extends AsyncTask<Void, Void, Integer> implements GestureDetector.OnGestureListener {
         /*                 Final attributes                 */
         private final long GAME_DURATION = 20000;
-        private final float DELTA_TIME = 0.1f;
-        private final double MIN_SWIPE_FORCE = 200;
         private final double MAX_SWIPE_FORCE = 1000;
         private final long COOLDOWN = 60;
 
