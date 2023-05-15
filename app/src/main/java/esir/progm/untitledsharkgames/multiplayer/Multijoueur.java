@@ -122,6 +122,11 @@ public abstract class Multijoueur extends AppCompatActivity {
         ((TextView)findViewById(R.id.J1_pseudo)).setText(this.pseudonyme+" : "+this.score);
         drawRectangle(findViewById(R.id.J1_score), this.score);
         int advScore = recupAdvScoreOnUI();
+        boolean toReactivate = false;
+        if (mediaPlayer!=null && mediaPlayer.isPlaying()) {
+            toReactivate = true;
+            mediaPlayer.stop();
+        }
         if (this.score > advScore) {
             ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.victory_song);
@@ -134,6 +139,7 @@ public abstract class Multijoueur extends AppCompatActivity {
             ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song);
         }
+        if (toReactivate) mediaPlayer.start();
     }
 
     private int recupAdvScoreOnUI() {
@@ -151,6 +157,11 @@ public abstract class Multijoueur extends AppCompatActivity {
     protected void drawAdversaryUiScores(String pseudo, int score) {
         ((TextView)findViewById(R.id.J2_pseudo)).setText(pseudo+" : "+score);
         drawRectangle(findViewById(R.id.J2_score), score);
+        boolean toReactivate = false;
+        if (mediaPlayer!=null && mediaPlayer.isPlaying()) {
+            toReactivate = true;
+            mediaPlayer.stop();
+        }
         if (this.score > score) {
             ((TextView)findViewById(R.id.victory)).setText("VICTOIRE");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.victory_song);
@@ -163,7 +174,7 @@ public abstract class Multijoueur extends AppCompatActivity {
             ((TextView)findViewById(R.id.victory)).setText("EX-AEQUO");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.exaequo_song);
         }
-        mediaPlayer.stop();
+        if (toReactivate) mediaPlayer.start();
     }
 
     protected void drawScore() {

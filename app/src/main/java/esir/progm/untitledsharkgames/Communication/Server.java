@@ -67,7 +67,7 @@ public class Server {
                         message.append(byteArrayOutputStream.toString("UTF-8"));
                     }
                     /*      Si le message commence par un "/" : étoffe ce dernier avec l'adresse IP     */
-                    if (message.charAt(0)=='/') {
+                    if (message.length()>0 && message.charAt(0)=='/') {
                         message.append("/" + socket.getInetAddress().getHostAddress());
                     }
                     // Envoit du message à la classe du serveur

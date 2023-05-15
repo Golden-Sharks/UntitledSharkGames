@@ -56,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             this.theme = "";
         }
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.quiz_pokemon);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.quizz_music);
         mediaPlayer.start();
         launch();
     }
