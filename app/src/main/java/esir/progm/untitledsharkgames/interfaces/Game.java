@@ -6,4 +6,5 @@ public abstract class Game extends AppCompatActivity {
 
     protected abstract void launch();
     protected abstract int getScore();
+
 }

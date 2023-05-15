@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -184,6 +185,8 @@ public class FeedTheShark extends AppCompatActivity{
                             shark_imageView.getX(), shark_imageView.getY());
 
                     if(distance<80) {
+                        MediaPlayer.create(getApplicationContext(), R.raw.eating).start();
+
                         score += 100;
                         publishProgress();
                         int fish_new_x = random.nextInt(SCREEN_WIDTH-fish_imageView.getWidth());
