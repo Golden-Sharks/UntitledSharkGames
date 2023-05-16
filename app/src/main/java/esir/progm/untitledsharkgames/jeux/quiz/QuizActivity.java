@@ -176,7 +176,6 @@ public class QuizActivity extends AppCompatActivity {
         boolean isEnd = qq.setUpNewQuestion();
         if (!isEnd) {
             new ManageFiles(getApplicationContext()).createFile("score_tmp", this.score+"");
-            System.out.println("true SCORE : "+this.score);
             Intent intent = new Intent();
             intent.putExtra("score", score);
             setResult(78, intent);

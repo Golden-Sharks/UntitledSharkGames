@@ -1,5 +1,7 @@
 package esir.progm.untitledsharkgames.menus;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import esir.progm.untitledsharkgames.jeux.feedTheShark.FeedTheShark;
 import esir.progm.untitledsharkgames.MusicPlayer;
@@ -28,6 +31,8 @@ public class Training extends AppCompatActivity {
 
     private boolean isOnBackground = false;
 
+    public ActivityResultLauncher<Intent> activityResultLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +46,7 @@ public class Training extends AppCompatActivity {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
-
+        setUpActivityLauncher();
         setButtons();
     }
 
@@ -53,16 +58,50 @@ public class Training extends AppCompatActivity {
         quiz.setOnClickListener(v -> startActivity(new Intent(Training.this, QuizTrainingTheme.class)));
 
         Button shakslap = findViewById(R.id.sharkslap);
-        shakslap.setOnClickListener(view -> startActivity(new Intent(Training.this, SharkSlap.class)));
+        shakslap.setOnClickListener(view -> launchActivity(1));
 
         Button whirlOtter = findViewById(R.id.WhirlOtter);
-        whirlOtter.setOnClickListener(view -> startActivity(new Intent(Training.this, WhrilOtter.class)));
+        whirlOtter.setOnClickListener(view -> launchActivity(2));
 
         Button feedSkark = findViewById(R.id.FeedSkark);
-        feedSkark.setOnClickListener(view -> startActivity(new Intent(Training.this, FeedTheShark.class)));
+        feedSkark.setOnClickListener(view -> launchActivity(3));
 
         Button spinShark = findViewById(R.id.spin);
-        spinShark.setOnClickListener(view -> startActivity(new Intent(Training.this, SpinTheShark.class)));
+        spinShark.setOnClickListener(view -> launchActivity(4));
+    }
+
+
+    private void setUpActivityLauncher() {
+        // Set activity launcher
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                activityResult -> {
+                    if(activityResult.getResultCode() == 78) {
+                        Intent intent = activityResult.getData();
+                        if(intent != null) {
+                            String score = "score : " + intent.getIntExtra("score", 0);
+                            Toast.makeText(getApplicationContext(), score, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    private void launchActivity(int id) {
+        Intent intent;
+        switch (id) {
+            case 1:
+                intent = new Intent(Training.this, SharkSlap.class);
+                break;
+            case 2:
+                intent = new Intent(Training.this, WhrilOtter.class);
+                break;
+            case 3:
+                intent = new Intent(Training.this, FeedTheShark.class);
+                break;
+            default:
+                intent = new Intent(Training.this, SpinTheShark.class);
+                break;
+        }
+        activityResultLauncher.launch(intent);
     }
 
     @Override

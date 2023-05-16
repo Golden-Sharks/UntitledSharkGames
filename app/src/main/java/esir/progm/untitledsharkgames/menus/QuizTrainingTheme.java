@@ -1,5 +1,7 @@
 package esir.progm.untitledsharkgames.menus;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentCallbacks2;
@@ -31,6 +33,7 @@ public class QuizTrainingTheme extends AppCompatActivity {
     private boolean isOnBackground = false;
 
     private ArrayList<String> infos;
+    public ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +48,23 @@ public class QuizTrainingTheme extends AppCompatActivity {
                 decor.setSystemUiVisibility(hideSystemBars);
             }
         });
-
+        setUpActivityLauncher();
         setButtons();
+    }
+
+    private void setUpActivityLauncher() {
+        // Set activity launcher
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                activityResult -> {
+                    if(activityResult.getResultCode() == 78) {
+                        Intent intent = activityResult.getData();
+                        if(intent != null) {
+                            String score = "score : " + intent.getIntExtra("score", 0);
+                            Toast.makeText(getApplicationContext(), score, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void setButtons() {
@@ -91,29 +109,12 @@ public class QuizTrainingTheme extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        readScore();
-    }
-
-    private void readScore() {
-        ManageFiles mf = new ManageFiles(getApplicationContext());
-        if (mf.exists("score_tmp")) {
-            String score = mf.readFile("score_tmp");
-            System.out.println("SCORE : "+score);
-            mf.erase("score_tmp");
-            Toast.makeText(getApplicationContext(), ("Votre score : "+score), Toast.LENGTH_LONG).show();
-        }
-    }
-
-
     private void launchWithTheme(String theme) {
         Intent intent = new Intent(QuizTrainingTheme.this, QuizActivity.class);
         Bundle b = new Bundle();
         b.putString("theme", theme);
         intent.putExtras(b);
-        startActivity(intent);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
