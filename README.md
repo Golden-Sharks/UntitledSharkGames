@@ -45,3 +45,7 @@ Here are all assets we use that we do not own.
 The code used by the Server and Client classes comes from the sites below. The code has been modified to better suit the needs of the project.
 - Server.java : [https://androidsrc.net/android-client-server-using-sockets-server-implementation/](https://androidsrc.net/android-client-server-using-sockets-server-implementation/)
 - Client.java : [https://androidsrc.net/android-client-server-using-sockets-client-implementation/](https://androidsrc.net/android-client-server-using-sockets-client-implementation/)
+
+
+## Download the APK here
+APK : [UntitledSharkGames.apk](https://drive.google.com/file/d/13-GpbBPIXoVWep6EQqIJI7NpUqVqotzW/view?usp=sharing)
